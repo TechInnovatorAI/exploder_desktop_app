@@ -1,0 +1,47 @@
+﻿<Window x:Class="Exploder.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Exploder" Width="1200" Height="800" 
+        KeyDown="Window_KeyDown"
+        WindowStartupLocation="CenterScreen">
+
+
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_File">
+                <MenuItem Header="_New" Click="MenuNew_Click" InputGestureText="Ctrl+N"/>
+                <MenuItem Header="_Open" Click="MenuOpen_Click" InputGestureText="Ctrl+O"/>
+                <MenuItem Header="_Save" Click="MenuSave_Click" InputGestureText="Ctrl+S"/>
+                <Separator />
+                <MenuItem Header="E_xit" Click="MenuExit_Click" InputGestureText="Alt+F4"/>
+            </MenuItem>
+        </Menu>
+        <!-- Toolbar on top -->
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Background="LightGray" HorizontalAlignment="Stretch" Margin="0,0,0,5">
+
+            <Button x:Name="btnViewMode" Content="View" Margin="5" Click="btnViewMode_Click"/>
+            <Button x:Name="btnInsertMode" Content="Insert" Margin="5" Click="btnInsertMode_Click"/>
+            <Button x:Name="btnSavePageMode" Content="Apply" Margin="5" Click="btnSavePageMode_Click"/>
+
+            <Separator Margin="10,0"/>
+
+            <Button x:Name="btnCircleTool" Content="Circle" Margin="5" Click="btnCircleTool_Click" IsEnabled="False"/>
+            <Button x:Name="btnSquareTool" Content="Square" Margin="5" Click="btnSquareTool_Click" IsEnabled="False"/>
+            <Button x:Name="btnLineTool" Content="Line" Margin="5" Click="btnLineTool_Click" IsEnabled="False"/>
+            <Button x:Name="btnImageTool" Content="Image" Margin="5" Click="btnImageTool_Click" IsEnabled="False"/>
+
+            <Separator Margin="10,0"/>
+
+            <Button x:Name="btnUndo" Content="Undo" Margin="5" Click="btnUndo_Click"/>
+            <Button x:Name="btnRedo" Content="Redo" Margin="5" Click="btnRedo_Click"/>
+        </StackPanel>
+
+        <!-- Main drawing area -->
+        <Grid x:Name="MainContentGrid" Background="White">
+            <Canvas x:Name="drawingCanvas" Background="White"
+                    MouseLeftButtonDown="drawingCanvas_MouseLeftButtonDown"
+                    MouseMove="drawingCanvas_MouseMove"
+                    MouseLeftButtonUp="drawingCanvas_MouseLeftButtonUp"/>
+        </Grid>
+    </DockPanel>
+</Window>

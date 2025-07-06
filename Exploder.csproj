@@ -1,0 +1,59 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net9.0-windows</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<UseWPF>true</UseWPF>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <None Remove="Assets\Splash1.png" />
+	  <None Remove="Assets\Splash10.png" />
+	  <None Remove="Assets\Splash2.png" />
+	  <None Remove="Assets\Splash3.png" />
+	  <None Remove="Assets\Splash4.png" />
+	  <None Remove="Assets\Splash5.png" />
+	  <None Remove="Assets\Splash6.png" />
+	  <None Remove="Assets\Splash7.png" />
+	  <None Remove="Assets\Splash8.png" />
+	  <None Remove="Assets\Splash9.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Resource Include="Assets\Splash10.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Resource Include="Assets\Splash5.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Resource Include="Assets\Splash1.png" />
+		<Resource Include="Assets\Splash2.png" />
+		<Resource Include="Assets\Splash3.png" />
+		<Resource Include="Assets\Splash4.png" />
+		<Resource Include="Assets\Splash6.png" />
+		<Resource Include="Assets\Splash7.png" />
+		<Resource Include="Assets\Splash8.png" />
+		<Resource Include="Assets\Splash9.png" />
+		<Resource Include="Resources\Icons\setting.png" />
+	</ItemGroup>
+	<ItemGroup>
+		<Folder Include="Helpers\" />
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Update="ViewModels\MainViewModel.cs">
+			<SubType>Code</SubType>
+		</Compile>
+		<Compile Update="Features\PowerTrain\PowerTrainControl.xaml.cs">
+			<SubType>Code</SubType>
+		</Compile>
+	</ItemGroup>
+
+	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+		<Exec Command="powershell -ExecutionPolicy Bypass -File &quot;$(ProjectDir)Properties\Kill-WpfApp.ps1&quot;" />
+	</Target>
+
+</Project>

@@ -1,17 +1,19 @@
 ﻿using Exploder.Setting;
 using Microsoft.Win32;   // For OpenFileDialog
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.Windows.Controls;
-using Microsoft.Win32;
-using System.IO;
 using System.Windows.Media.Imaging;
-using System.Runtime.Serialization.Formatters.Binary;
+using System.Windows.Shapes;
 
 namespace Exploder
 {
@@ -22,14 +24,21 @@ namespace Exploder
         private bool circleToolActive = false;
         private bool squareToolActive = false;
         private bool lineToolActive = false;
+        private bool roundedRectToolActive = false;
+        private bool triangleToolActive = false;
+        
+
+
 
         private bool isDrawing = false;
         private Point startPoint;
 
         private Ellipse? currentEllipse = null;
         private Rectangle? currentRectangle = null;
+        private Rectangle? currentRoundedRectangle = null;
         private Line? currentLine = null;
         private Image? currentImage = null;
+        private Polygon? currentTriangle = null;
 
         private Stack<UIElement> undoStack = new Stack<UIElement>();
         private Stack<UIElement> redoStack = new Stack<UIElement>();
@@ -174,8 +183,15 @@ namespace Exploder
             this.Close();
         }
 
+        public class PointData
+        {
+            public double X { get; set; }
+            public double Y { get; set; }
+        }
         private void SaveProjectToFile(string path)
         {
+            try
+    {
             ProjectData project = new();
 
             foreach (UIElement element in drawingCanvas.Children)
@@ -230,15 +246,37 @@ namespace Exploder
                         ImagePath = bmp.UriSource?.LocalPath ?? ""
                     });
                 }
+                else if (element is Polygon polygon)
+                {
+                    if (polygon.Points.Count == 3) // Triangle
+                    {
+                        project.Shapes.Add(new ShapeData
+                        {
+                            Type = "Triangle",
+                            //Points = polygon.Points.Select(p => new PointData { X = p.X, Y = p.Y }).ToList(),
+                            FillColor = ((SolidColorBrush)polygon.Fill).Color.ToString(),
+                            StrokeColor = ((SolidColorBrush)polygon.Stroke).Color.ToString()
+                        });
+                    }
+                    else
+                    {
+                        // Handle other polygons if needed
+                    }
+                }
             }
 
-            try
+            var options = new JsonSerializerOptions
             {
-                string json = System.Text.Json.JsonSerializer.Serialize(project);
-                File.WriteAllText(path, json);
+                WriteIndented = true,
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+            };
 
-                MessageBox.Show("Project saved successfully.", "Saved", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
+            string jsonString = JsonSerializer.Serialize(project, options);
+
+            System.IO.File.WriteAllText(path, jsonString);
+
+            MessageBox.Show("Project saved successfully!", "Save", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
             catch (Exception ex)
             {
                 MessageBox.Show("Error saving project: " + ex.Message);
@@ -264,10 +302,15 @@ namespace Exploder
                     btnSquareTool.IsEnabled = false;
                     btnLineTool.IsEnabled = false;
                     btnImageTool.IsEnabled = false;
+                    btnRoundedRectTool.IsEnabled = false;
+                    btntriangleTool.IsEnabled = false;
+
 
                     circleToolActive = false;
                     squareToolActive = false;
                     lineToolActive = false;
+                    roundedRectToolActive = false;
+                    triangleToolActive = false;
 
                     Title = "Exploder - View Mode";
                     break;
@@ -277,6 +320,9 @@ namespace Exploder
                     btnSquareTool.IsEnabled = true;
                     btnLineTool.IsEnabled = true;
                     btnImageTool.IsEnabled = true;
+                    btnRoundedRectTool.IsEnabled = true;
+                    btntriangleTool.IsEnabled = true;
+
 
                     Title = "Exploder - Insert Mode";
                     break;
@@ -285,10 +331,14 @@ namespace Exploder
                     btnSquareTool.IsEnabled = false;
                     btnLineTool.IsEnabled = false;
                     btnImageTool.IsEnabled = false;
+                    btnRoundedRectTool.IsEnabled = false;
+                    btntriangleTool.IsEnabled = false;
 
                     circleToolActive = false;
                     squareToolActive = false;
                     lineToolActive = false;
+                    roundedRectToolActive = false;
+                    triangleToolActive = false;
 
                     Title = "Exploder - Save Mode";
                     break;
@@ -297,10 +347,14 @@ namespace Exploder
                     btnSquareTool.IsEnabled = false;
                     btnLineTool.IsEnabled = false;
                     btnImageTool.IsEnabled = false;
+                    btnRoundedRectTool.IsEnabled = false;
+                    btntriangleTool.IsEnabled = false;
 
                     circleToolActive = false;
                     squareToolActive = false;
                     lineToolActive = false;
+                    roundedRectToolActive = false;
+                    triangleToolActive = false;
 
                     Title = "Exploder - Apply Mode";
                     SavePage();
@@ -351,6 +405,8 @@ namespace Exploder
                 circleToolActive = true;
                 squareToolActive = false;
                 lineToolActive = false;
+                triangleToolActive = false;
+
             }
         }
 
@@ -361,6 +417,8 @@ namespace Exploder
                 squareToolActive = true;
                 circleToolActive = false;
                 lineToolActive = false;
+                triangleToolActive = false;
+
             }
         }
 
@@ -371,6 +429,7 @@ namespace Exploder
                 lineToolActive = true;
                 circleToolActive = false;
                 squareToolActive = false;
+                triangleToolActive = false;
             }
         }
 
@@ -382,8 +441,31 @@ namespace Exploder
             }
         }
 
-            
-            // You can also add reposition/resize logic for other shapes here if needed
+        private void btnRoundedRectTool_Click(object sender, RoutedEventArgs e)
+        {
+            if (currentMode == AppMode.Insert)
+            {
+                roundedRectToolActive = true;
+                circleToolActive = false;
+                squareToolActive = false;
+                lineToolActive = false;
+                triangleToolActive = false;
+
+            }
+        }
+
+        private void btnTriangleToolButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (currentMode == AppMode.Insert)
+            {
+                triangleToolActive = true;
+                circleToolActive = false;
+                squareToolActive = false;
+                lineToolActive = false;
+                roundedRectToolActive = false;
+            }          
+        }
+        // You can also add reposition/resize logic for other shapes here if needed
         private void LoadImageFromFile()
         {
             OpenFileDialog dlg = new OpenFileDialog
@@ -402,8 +484,8 @@ namespace Exploder
                     currentImage = new Image
                     {
                         Source = bitmap,
-                        Width = 450,
-                        Height = 450,
+                        Width = 800,
+                        Height = 500,
                         Stretch = Stretch.Uniform
                     };
 
@@ -435,7 +517,7 @@ namespace Exploder
         // Drawing logic
         private void drawingCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (currentMode != AppMode.Insert || (!circleToolActive && !squareToolActive && !lineToolActive))
+            if (currentMode != AppMode.Insert || (!circleToolActive && !squareToolActive && !lineToolActive && !triangleToolActive))
                 return;
 
             isDrawing = true;
@@ -448,14 +530,15 @@ namespace Exploder
                     Stroke = Brushes.Blue,
                     StrokeThickness = 2,
                     Fill = Brushes.LightBlue,
-                    Width = 50,
-                    Height = 50
+                    Width = 0,
+                    Height = 0,
                 };
 
-                Canvas.SetLeft(currentEllipse, startPoint.X - 25);
-                Canvas.SetTop(currentEllipse, startPoint.Y - 25);
+                Canvas.SetLeft(currentEllipse, startPoint.X);
+                Canvas.SetTop(currentEllipse, startPoint.Y);
                 drawingCanvas.Children.Add(currentEllipse);
             }
+           
             else if (squareToolActive)
             {
                 currentRectangle = new Rectangle
@@ -463,12 +546,12 @@ namespace Exploder
                     Stroke = Brushes.Green,
                     StrokeThickness = 2,
                     Fill = Brushes.LightGreen,
-                    Width = 50,
-                    Height = 50
+                    Width = 0,
+                    Height = 0,
                 };
 
-                Canvas.SetLeft(currentRectangle, startPoint.X - 25);
-                Canvas.SetTop(currentRectangle, startPoint.Y - 25);
+                Canvas.SetLeft(currentRectangle, startPoint.X);
+                Canvas.SetTop(currentRectangle, startPoint.Y);
                 drawingCanvas.Children.Add(currentRectangle);
             }
             else if (lineToolActive)
@@ -485,35 +568,89 @@ namespace Exploder
                 };
                 drawingCanvas.Children.Add(currentLine);
             }
+            else if (roundedRectToolActive)
+            {
+                currentRoundedRectangle = new Rectangle
+                {
+                    RadiusX = 25,
+                    RadiusY = 25,
+                    Stroke = Brushes.Orange,
+                    Fill = Brushes.LightSalmon,
+                    StrokeThickness = 2,
+                    Width = 0,
+                    Height = 0,
+                    Opacity = 0.3
+                };
+                Canvas.SetLeft(currentRoundedRectangle, startPoint.X);
+                Canvas.SetTop(currentRoundedRectangle, startPoint.Y);
+                drawingCanvas.Children.Add(currentRoundedRectangle);
+            }
+            else if (triangleToolActive)
+            {
+                currentTriangle = new Polygon
+                {
+                    Stroke = Brushes.Black,
+                    StrokeThickness = 2,
+                    Fill = Brushes.Transparent
+                };
+
+                drawingCanvas.Children.Add(currentTriangle);
+            }
+
 
             drawingCanvas.CaptureMouse();
         }
 
         private void drawingCanvas_MouseMove(object sender, MouseEventArgs e)
         {
-            if (!isDrawing) return;
 
+            if (!isDrawing) return;
+           
             Point currentPoint = e.GetPosition(drawingCanvas);
+            Point p1 = new Point((startPoint.X + currentPoint.X) / 2, startPoint.Y); // Top
+            Point p2 = new Point(startPoint.X, currentPoint.Y); // Bottom left
+            Point p3 = new Point(currentPoint.X, currentPoint.Y); // Bottom right
             double size = Math.Max(Math.Abs(currentPoint.X - startPoint.X), Math.Abs(currentPoint.Y - startPoint.Y));
+            double width = Math.Abs(currentPoint.X - startPoint.X);
+            double height = Math.Abs(currentPoint.Y - startPoint.Y);
+            double left = Math.Min(currentPoint.X, startPoint.X);
+            double top = Math.Min(currentPoint.Y, startPoint.Y);
 
             if (circleToolActive && currentEllipse != null)
             {
-                currentEllipse.Width = size * 2;
-                currentEllipse.Height = size * 2;
-                Canvas.SetLeft(currentEllipse, startPoint.X - size);
-                Canvas.SetTop(currentEllipse, startPoint.Y - size);
+                currentEllipse.Width = width;
+                currentEllipse.Height = height;
+                Canvas.SetLeft(currentEllipse,left);
+                Canvas.SetTop(currentEllipse, top);
             }
             else if (squareToolActive && currentRectangle != null)
             {
-                currentRectangle.Width = size * 2;
-                currentRectangle.Height = size * 2;
-                Canvas.SetLeft(currentRectangle, startPoint.X - size);
-                Canvas.SetTop(currentRectangle, startPoint.Y - size);
+                currentRectangle.Width = width;
+                currentRectangle.Height = height;
+                Canvas.SetLeft(currentRectangle,left);
+                Canvas.SetTop(currentRectangle, top);
             }
             else if (lineToolActive && currentLine != null)
             {
                 currentLine.X2 = currentPoint.X;
                 currentLine.Y2 = currentPoint.Y;
+            }
+            else if (roundedRectToolActive && currentRoundedRectangle != null)
+            {
+                currentRoundedRectangle.Width = width;
+                currentRoundedRectangle.Height = height;
+                Canvas.SetLeft(currentRoundedRectangle, left);
+                Canvas.SetTop(currentRoundedRectangle, top);
+            }
+
+            else if (triangleToolActive && currentTriangle != null)
+            {
+                
+                // Calculate three points of a triangle
+               
+
+                PointCollection points = new PointCollection { p1, p2, p3 };
+                currentTriangle.Points = points;
             }
         }
 
@@ -544,6 +681,18 @@ namespace Exploder
                 undoStack.Push(currentLine);
                 redoStack.Clear();
                 currentLine = null;
+            }
+            if (currentRoundedRectangle != null)
+            {
+                undoStack.Push(currentRoundedRectangle);
+                redoStack.Clear();
+                currentRoundedRectangle = null;
+            }
+            if (triangleToolActive && currentTriangle != null)
+            {
+                undoStack.Push(currentTriangle);
+                redoStack.Clear();
+                currentTriangle = null;
             }
         }
 

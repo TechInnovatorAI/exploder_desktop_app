@@ -12,9 +12,9 @@ TRACE;DEBUG;NET;NET9_0;NETCOREAPP;WINDOWS;WINDOWS7_0;NET5_0_OR_GREATER;NET6_0_OR
 D:\app\Exploder\App.xaml
 6812579764
 
-141069292879
+151257729707
 2001466749558
 Features\Engine\EngineControl.xaml;Features\PowerTrain\PowerTrainControl.xaml;MainWindow.xaml;NavBar\File\FilePage.xaml;Resources\Styles.xaml;SplashWindow.xaml;
 
-True
+False
 

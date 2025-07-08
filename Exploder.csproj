@@ -20,7 +20,6 @@
 	  <None Remove="Assets\Splash8.png" />
 	  <None Remove="Assets\Splash9.png" />
 	</ItemGroup>
-
 	<ItemGroup>
 	  <Resource Include="Assets\Splash10.png" />
 	</ItemGroup>

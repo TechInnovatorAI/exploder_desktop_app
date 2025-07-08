@@ -1,4 +1,8 @@
-D:\app\Exploder\obj\Debug\net9.0-windows\MainWindow.baml
+D:\app\Exploder\bin\Debug\net9.0-windows\Exploder.exe
+D:\app\Exploder\bin\Debug\net9.0-windows\Exploder.deps.json
+D:\app\Exploder\bin\Debug\net9.0-windows\Exploder.runtimeconfig.json
+D:\app\Exploder\bin\Debug\net9.0-windows\Exploder.dll
+D:\app\Exploder\bin\Debug\net9.0-windows\Exploder.pdb
 D:\app\Exploder\obj\Debug\net9.0-windows\NavBar\File\FilePage.baml
 D:\app\Exploder\obj\Debug\net9.0-windows\Resources\Styles.baml
 D:\app\Exploder\obj\Debug\net9.0-windows\SplashWindow.baml
@@ -11,13 +15,9 @@ D:\app\Exploder\obj\Debug\net9.0-windows\SplashWindow.g.cs
 D:\app\Exploder\obj\Debug\net9.0-windows\App.g.cs
 D:\app\Exploder\obj\Debug\net9.0-windows\Exploder_MarkupCompile.cache
 D:\app\Exploder\obj\Debug\net9.0-windows\Exploder_MarkupCompile.lref
-D:\app\Exploder\bin\Debug\net9.0-windows\Exploder.exe
-D:\app\Exploder\bin\Debug\net9.0-windows\Exploder.deps.json
-D:\app\Exploder\bin\Debug\net9.0-windows\Exploder.runtimeconfig.json
-D:\app\Exploder\bin\Debug\net9.0-windows\Exploder.dll
-D:\app\Exploder\bin\Debug\net9.0-windows\Exploder.pdb
 D:\app\Exploder\obj\Debug\net9.0-windows\Features\Engine\EngineControl.baml
 D:\app\Exploder\obj\Debug\net9.0-windows\Features\PowerTrain\PowerTrainControl.baml
+D:\app\Exploder\obj\Debug\net9.0-windows\MainWindow.baml
 D:\app\Exploder\obj\Debug\net9.0-windows\Exploder.g.resources
 D:\app\Exploder\obj\Debug\net9.0-windows\Exploder.GeneratedMSBuildEditorConfig.editorconfig
 D:\app\Exploder\obj\Debug\net9.0-windows\Exploder.AssemblyInfoInputs.cache

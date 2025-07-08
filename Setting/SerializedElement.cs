@@ -1,4 +1,4 @@
-﻿namespace Exploder
+﻿namespace Exploder.Setting
 {
     public class SerializedElement
     {

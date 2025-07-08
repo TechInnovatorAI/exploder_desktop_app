@@ -26,13 +26,15 @@ namespace Exploder
         private bool lineToolActive = false;
         private bool roundedRectToolActive = false;
         private bool triangleToolActive = false;
-        
+        private bool textToolActive = false;
+
 
 
 
         private bool isDrawing = false;
         private Point startPoint;
 
+        private Button? currentButton;
         private Ellipse? currentEllipse = null;
         private Rectangle? currentRectangle = null;
         private Rectangle? currentRoundedRectangle = null;
@@ -304,13 +306,14 @@ namespace Exploder
                     btnImageTool.IsEnabled = false;
                     btnRoundedRectTool.IsEnabled = false;
                     btntriangleTool.IsEnabled = false;
-
+                    btnTextTool.IsEnabled = false;
 
                     circleToolActive = false;
                     squareToolActive = false;
                     lineToolActive = false;
                     roundedRectToolActive = false;
                     triangleToolActive = false;
+                    textToolActive = false;
 
                     Title = "Exploder - View Mode";
                     break;
@@ -322,7 +325,7 @@ namespace Exploder
                     btnImageTool.IsEnabled = true;
                     btnRoundedRectTool.IsEnabled = true;
                     btntriangleTool.IsEnabled = true;
-
+                    btnTextTool.IsEnabled = true;
 
                     Title = "Exploder - Insert Mode";
                     break;
@@ -333,12 +336,15 @@ namespace Exploder
                     btnImageTool.IsEnabled = false;
                     btnRoundedRectTool.IsEnabled = false;
                     btntriangleTool.IsEnabled = false;
+                    btnTextTool.IsEnabled = true;
+
 
                     circleToolActive = false;
                     squareToolActive = false;
                     lineToolActive = false;
                     roundedRectToolActive = false;
                     triangleToolActive = false;
+                    textToolActive = true;
 
                     Title = "Exploder - Save Mode";
                     break;
@@ -349,12 +355,14 @@ namespace Exploder
                     btnImageTool.IsEnabled = false;
                     btnRoundedRectTool.IsEnabled = false;
                     btntriangleTool.IsEnabled = false;
+                    btnTextTool.IsEnabled = true;
 
                     circleToolActive = false;
                     squareToolActive = false;
                     lineToolActive = false;
                     roundedRectToolActive = false;
                     triangleToolActive = false;
+                    textToolActive = true;
 
                     Title = "Exploder - Apply Mode";
                     SavePage();
@@ -445,6 +453,7 @@ namespace Exploder
         {
             if (currentMode == AppMode.Insert)
             {
+                
                 roundedRectToolActive = true;
                 circleToolActive = false;
                 squareToolActive = false;
@@ -465,6 +474,15 @@ namespace Exploder
                 roundedRectToolActive = false;
             }          
         }
+        private void btnTextTool_Click(object sender, RoutedEventArgs e)
+        {
+            if (currentMode == AppMode.Insert)
+            {
+                textToolActive = true;
+                circleToolActive = squareToolActive = lineToolActive = roundedRectToolActive = false;
+            }
+        }
+
         // You can also add reposition/resize logic for other shapes here if needed
         private void LoadImageFromFile()
         {
@@ -513,11 +531,14 @@ namespace Exploder
                 }
             }
         }
-
+        private void EllipseButton_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("You clicked the circle!");
+        }
         // Drawing logic
         private void drawingCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (currentMode != AppMode.Insert || (!circleToolActive && !squareToolActive && !lineToolActive && !triangleToolActive))
+            if (currentMode != AppMode.Insert || (!circleToolActive && !squareToolActive && !lineToolActive && !triangleToolActive && !roundedRectToolActive && !textToolActive))
                 return;
 
             isDrawing = true;
@@ -534,11 +555,24 @@ namespace Exploder
                     Height = 0,
                 };
 
-                Canvas.SetLeft(currentEllipse, startPoint.X);
-                Canvas.SetTop(currentEllipse, startPoint.Y);
-                drawingCanvas.Children.Add(currentEllipse);
+                var ellipseButton = new Button
+                {
+                    Content = currentEllipse,
+                    Background = Brushes.Transparent,
+                    BorderBrush = null,
+                    Padding = new Thickness(0),
+                    Width = 0,
+                    Height = 0,
+                };
+
+                ellipseButton.Click += EllipseButton_Click;
+
+                Canvas.SetLeft(ellipseButton, startPoint.X);
+                Canvas.SetTop(ellipseButton, startPoint.Y);
+                drawingCanvas.Children.Add(ellipseButton);
+                currentButton = ellipseButton; // Track current shape as a button
             }
-           
+
             else if (squareToolActive)
             {
                 currentRectangle = new Rectangle
@@ -550,9 +584,29 @@ namespace Exploder
                     Height = 0,
                 };
 
+                currentButton = new Button
+                {
+                    Background = Brushes.Transparent,
+                    BorderThickness = new Thickness(0),
+                    BorderBrush = Brushes.Transparent,
+                    Opacity = 0.7,
+                    Width = 0,
+                    Height = 0
+                };
+
+                currentButton.Click += (s, args) =>
+                {
+                    MessageBox.Show("Square button clicked!");
+                };
+
                 Canvas.SetLeft(currentRectangle, startPoint.X);
                 Canvas.SetTop(currentRectangle, startPoint.Y);
+                Canvas.SetLeft(currentButton, startPoint.X);
+                Canvas.SetTop(currentButton, startPoint.Y);
+
+
                 drawingCanvas.Children.Add(currentRectangle);
+                drawingCanvas.Children.Add(currentButton);
             }
             else if (lineToolActive)
             {
@@ -579,11 +633,30 @@ namespace Exploder
                     StrokeThickness = 2,
                     Width = 0,
                     Height = 0,
-                    Opacity = 0.3
                 };
+
+                currentButton = new Button
+                {
+                    Background = Brushes.Transparent,
+                    BorderThickness = new Thickness(0),
+                    Opacity = 0.7,
+                    Width = 0,
+                    Height = 0
+                };
+
+                currentButton.Click += (s, args) =>
+                {
+                    MessageBox.Show("Rounded Rectangle button clicked!");
+                };
+
                 Canvas.SetLeft(currentRoundedRectangle, startPoint.X);
                 Canvas.SetTop(currentRoundedRectangle, startPoint.Y);
+
+                Canvas.SetLeft(currentButton, startPoint.X);
+                Canvas.SetTop(currentButton, startPoint.Y);
+
                 drawingCanvas.Children.Add(currentRoundedRectangle);
+                drawingCanvas.Children.Add(currentButton);
             }
             else if (triangleToolActive)
             {
@@ -594,10 +667,50 @@ namespace Exploder
                     Fill = Brushes.Transparent
                 };
 
+                currentButton = new Button
+                {
+                    Background = Brushes.Transparent,
+                    BorderThickness = new Thickness(0),
+                    Opacity = 0.7,
+                    Width = 0,
+                    Height = 0
+                };
+
+                currentButton.Click += (s, args) =>
+                {
+                    MessageBox.Show("Triangle button clicked!");
+                };
+
+                Canvas.SetLeft(currentButton, startPoint.X);
+                Canvas.SetTop(currentButton, startPoint.Y);
+
                 drawingCanvas.Children.Add(currentTriangle);
+                drawingCanvas.Children.Add(currentButton);
             }
+            else if (textToolActive)
+            {
+                var textBox = new TextBox
+                {
+                    Text = "",
+                    FontSize = 16,
+                    Width = 50,
+                    Height = 30,
+                    Background = Brushes.Transparent,
+                    BorderBrush = Brushes.Gray,
+                    BorderThickness = new Thickness(1)
+                };
 
+                textBox.KeyDown += TextBox_KeyDown; // ✅ Add this line
 
+                Canvas.SetLeft(textBox, startPoint.X);
+                Canvas.SetTop(textBox, startPoint.Y);
+                drawingCanvas.Children.Add(textBox);
+                textBox.Focus();
+
+                undoStack.Push(textBox);
+                redoStack.Clear();
+                isDrawing = false;
+            }
             drawingCanvas.CaptureMouse();
         }
 
@@ -616,41 +729,72 @@ namespace Exploder
             double left = Math.Min(currentPoint.X, startPoint.X);
             double top = Math.Min(currentPoint.Y, startPoint.Y);
 
+            double buttonWidth = width * 1.02;
+            double buttonHeight = height * 1.02;
+
+            double offsetX = (buttonWidth - width) / 2;
+            double offsetY = (buttonHeight - height) / 2;
+
             if (circleToolActive && currentEllipse != null)
             {
                 currentEllipse.Width = width;
                 currentEllipse.Height = height;
-                Canvas.SetLeft(currentEllipse,left);
+
+                currentButton.Width = buttonWidth;
+                currentButton.Height = buttonHeight;
+
+                Canvas.SetLeft(currentEllipse, left);
                 Canvas.SetTop(currentEllipse, top);
+
+                Canvas.SetLeft(currentButton, left - offsetX);
+                Canvas.SetTop(currentButton, top - offsetY);
             }
-            else if (squareToolActive && currentRectangle != null)
+            else if (squareToolActive && currentRectangle != null && currentButton != null)
             {
                 currentRectangle.Width = width;
                 currentRectangle.Height = height;
-                Canvas.SetLeft(currentRectangle,left);
+
+                currentButton.Width = buttonWidth;
+                currentButton.Height = buttonHeight;
+
+                Canvas.SetLeft(currentRectangle, left);
                 Canvas.SetTop(currentRectangle, top);
+
+                Canvas.SetLeft(currentButton, left - offsetX);
+                Canvas.SetTop(currentButton, top - offsetY);
             }
             else if (lineToolActive && currentLine != null)
             {
                 currentLine.X2 = currentPoint.X;
                 currentLine.Y2 = currentPoint.Y;
             }
-            else if (roundedRectToolActive && currentRoundedRectangle != null)
+            else if (roundedRectToolActive && currentRoundedRectangle != null && currentButton != null)
             {
                 currentRoundedRectangle.Width = width;
                 currentRoundedRectangle.Height = height;
+
+                currentButton.Width = buttonWidth;
+                currentButton.Height = buttonHeight;
+
                 Canvas.SetLeft(currentRoundedRectangle, left);
                 Canvas.SetTop(currentRoundedRectangle, top);
+
+                Canvas.SetLeft(currentButton, left - offsetX);
+                Canvas.SetTop(currentButton, top - offsetY);
             }
-
-            else if (triangleToolActive && currentTriangle != null)
+            else if (triangleToolActive && currentTriangle != null && currentButton != null)
             {
-                
-                // Calculate three points of a triangle
-               
+                //Point p1 = new Point((startPoint.X + currentPoint.X) / 2, startPoint.Y); // Top
+                //Point p2 = new Point(startPoint.X, currentPoint.Y); // Bottom left
+                //Point p3 = new Point(currentPoint.X, currentPoint.Y); // Bottom right
 
-                PointCollection points = new PointCollection { p1, p2, p3 };
-                currentTriangle.Points = points;
+                //currentTriangle.Points = new PointCollection { p1, p2, p3 };
+
+                //currentButton.Width = buttonWidth;
+                //currentButton.Height = buttonHeight;
+
+                //Canvas.SetLeft(currentButton, left - offsetX);
+                //Canvas.SetTop(currentButton, top - offsetY);
             }
         }
 
@@ -661,19 +805,30 @@ namespace Exploder
 
             isDrawing = false;
             drawingCanvas.ReleaseMouseCapture();
-
+            if (currentButton != null)
+            {
+                undoStack.Push(currentButton);
+                redoStack.Clear();
+                currentButton = null;
+            }
             if (currentEllipse != null)
             {
                 undoStack.Push(currentEllipse);
+                undoStack.Push(currentButton);
                 redoStack.Clear();
+
                 currentEllipse = null;
+                currentButton = null;
             }
 
             if (currentRectangle != null)
             {
                 undoStack.Push(currentRectangle);
+                undoStack.Push(currentButton);
                 redoStack.Clear();
+
                 currentRectangle = null;
+                currentButton = null;
             }
 
             if (currentLine != null)
@@ -685,14 +840,21 @@ namespace Exploder
             if (currentRoundedRectangle != null)
             {
                 undoStack.Push(currentRoundedRectangle);
+                undoStack.Push(currentButton);
                 redoStack.Clear();
+
                 currentRoundedRectangle = null;
+                currentButton = null;
             }
-            if (triangleToolActive && currentTriangle != null)
+
+            if (currentTriangle != null)
             {
                 undoStack.Push(currentTriangle);
+                undoStack.Push(currentButton);
                 redoStack.Clear();
+
                 currentTriangle = null;
+                currentButton = null;
             }
         }
 
@@ -716,7 +878,39 @@ namespace Exploder
                 undoStack.Push(element);
             }
         }
+        private void TextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                TextBox tb = sender as TextBox;
 
+                var textBlock = new TextBlock
+                {
+                    Text = tb.Text,
+                    FontSize = tb.FontSize,
+                    Width = tb.Width,
+                    Height = tb.Height,
+                    Background = Brushes.Transparent
+                };
+
+                double left = Canvas.GetLeft(tb);
+                double top = Canvas.GetTop(tb);
+
+                Canvas.SetLeft(textBlock, left);
+                Canvas.SetTop(textBlock, top);
+
+                drawingCanvas.Children.Remove(tb);
+                drawingCanvas.Children.Add(textBlock);
+
+                undoStack.Push(textBlock);
+                redoStack.Clear();
+
+                e.Handled = true;
+
+                SetMode(currentMode = AppMode.Insert);
+                squareToolActive = true;
+            }
+        }
         // Keyboard shortcuts Ctrl+Z and Ctrl+Y
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {

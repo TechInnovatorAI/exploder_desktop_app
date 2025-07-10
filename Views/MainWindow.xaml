@@ -1,0 +1,131 @@
+﻿<Window x:Class="Exploder.Views.MainWindow"
+        xmlns:local="clr-namespace:Exploder.Views"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Exploder" Width="1400" Height="900" 
+        KeyDown="Window_KeyDown"
+        WindowStartupLocation="CenterScreen"
+        WindowState="Maximized"
+        FontFamily="Segoe UI">
+    <Window.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#F4F8FB" Offset="0"/>
+            <GradientStop Color="#E9EEF3" Offset="1"/>
+        </LinearGradientBrush>
+    </Window.Background>
+    <DockPanel>
+        <!-- Menu Bar -->
+        <Menu DockPanel.Dock="Top" FontSize="15" Background="#F8F9FA" Foreground="#222">
+            <MenuItem Header="_File">
+                <MenuItem Header="_New" Click="MenuNew_Click" InputGestureText="Ctrl+N"/>
+                <MenuItem Header="_Open" Click="MenuOpen_Click" InputGestureText="Ctrl+O"/>
+                <MenuItem Header="_Save" Click="MenuSave_Click" InputGestureText="Ctrl+S"/>
+                <MenuItem Header="Save _As" Click="MenuSaveAs_Click" InputGestureText="Ctrl+Shift+S"/>
+                <Separator />
+                <MenuItem Header="_Publish" Click="MenuPublish_Click"/>
+                <Separator />
+                <MenuItem Header="E_xit" Click="MenuExit_Click" InputGestureText="Alt+F4"/>
+            </MenuItem>
+            <MenuItem Header="_Design">
+                <MenuItem Header="_Objects" Click="MenuObjects_Click"/>
+                <MenuItem Header="_Documents" Click="MenuDocuments_Click"/>
+            </MenuItem>
+            <MenuItem Header="_Help">
+                <MenuItem Header="_About" Click="MenuAbout_Click"/>
+                <MenuItem Header="_Help" Click="MenuHelp_Click"/>
+            </MenuItem>
+        </Menu>
+
+        <!-- Toolbar -->
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Background="#F4F6F8" HorizontalAlignment="Stretch" Margin="0,0,0,5">
+            <!-- Mode Buttons -->
+            <Button x:Name="btnViewMode" Content="View" Margin="5,0" Padding="12,4" Click="btnViewMode_Click" ToolTip="View mode - click objects to navigate"/>
+            <Button x:Name="btnInsertMode" Content="Insert" Margin="5,0" Padding="12,4" Click="btnInsertMode_Click" ToolTip="Insert mode - add new objects"/>
+            <Button x:Name="btnEditMode" Content="Edit" Margin="5,0" Padding="12,4" Click="btnEditMode_Click" ToolTip="Edit mode - modify existing objects"/>
+            <Separator Margin="16,0"/>
+            <!-- Drawing Tools -->
+            <Button x:Name="btnCircleTool" Content="⭕" Margin="5,0" Padding="10,4" Click="btnCircleTool_Click" ToolTip="Circle tool"/>
+            <Button x:Name="btnSquareTool" Content="⬜" Margin="5,0" Padding="10,4" Click="btnSquareTool_Click" ToolTip="Rectangle tool"/>
+            <Button x:Name="btnRoundedRectTool" Content="⬭" Margin="5,0" Padding="10,4" Click="btnRoundedRectTool_Click" IsEnabled="False" ToolTip="Rounded rectangle tool"/>
+            <Button x:Name="btnTriangleTool" Content="△" Margin="5,0" Padding="10,4" Click="btnTriangleTool_Click" ToolTip="Triangle tool"/>
+            <Button x:Name="btnLineTool" Content="╱" Margin="5,0" Padding="10,4" Click="btnLineTool_Click" IsEnabled="False" ToolTip="Line tool"/>
+            <Button x:Name="btnTextTool" Content="T" Margin="5,0" Padding="10,4" Click="btnTextTool_Click" IsEnabled="False" ToolTip="Text tool"/>
+            <Button x:Name="btnImageTool" Content="🖼" Margin="5,0" Padding="10,4" Click="btnImageTool_Click" IsEnabled="False" ToolTip="Image tool"/>
+            <Separator Margin="16,0"/>
+            <!-- Edit Tools -->
+            <Button x:Name="btnUndo" Content="↶" Margin="5,0" Padding="10,4" Click="btnUndo_Click" ToolTip="Undo (Ctrl+Z)"/>
+            <Button x:Name="btnRedo" Content="↷" Margin="5,0" Padding="10,4" Click="btnRedo_Click" ToolTip="Redo (Ctrl+Y)"/>
+            <Button x:Name="btnDelete" Content="🗑" Margin="5,0" Padding="10,4" Click="btnDelete_Click" ToolTip="Delete selected object (Del)"/>
+            <Separator Margin="16,0"/>
+            <!-- Navigation -->
+            <Button x:Name="btnBackToPrevious" Content="← Back" Margin="5,0" Padding="12,4" Click="btnBackToPrevious_Click" ToolTip="Go to previous page"/>
+            <Button x:Name="btnBackToMain" Content="⇤ Main" Margin="5,0" Padding="12,4" Click="btnBackToMain_Click" ToolTip="Go to main page"/>
+        </StackPanel>
+
+        <!-- Project Info Bar -->
+        <Border DockPanel.Dock="Top" Background="#E3F0FB" Margin="10,5" CornerRadius="8">
+            <StackPanel Orientation="Horizontal" Margin="12,6">
+                <TextBlock x:Name="txtProjectName" Text="No Project" FontWeight="Bold" Margin="0,0,20,0" FontSize="16"/>
+                <TextBlock x:Name="txtCurrentPage" Text="No Page" Margin="0,0,20,0" FontSize="16"/>
+                <TextBlock x:Name="txtPageInfo" Text="" Foreground="#4A6FA5" FontSize="14"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Status Bar -->
+        <Border DockPanel.Dock="Bottom" Background="#2C3E50" BorderBrush="#34495E" BorderThickness="0,2,0,0" Height="36" CornerRadius="0,0,12,12" Effect="{DynamicResource StatusBarShadow}">
+            <StatusBar Background="Transparent" BorderThickness="0" Height="36">
+                <StatusBarItem>
+                    <StackPanel Orientation="Horizontal">
+                        <Ellipse Width="8" Height="8" Fill="#27AE60" Margin="0,0,8,0"/>
+                        <TextBlock x:Name="txtStatus" Text="Ready" FontWeight="SemiBold" Foreground="White" FontSize="13"/>
+                    </StackPanel>
+                </StatusBarItem>
+                <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Margin="16,0" Background="#34495E"/>
+                <StatusBarItem HorizontalAlignment="Center">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="📊 Objects: " Foreground="#BDC3C7" FontSize="13"/>
+                        <TextBlock x:Name="txtObjectCount" Text="0" FontWeight="Bold" Foreground="White" FontSize="13"/>
+                    </StackPanel>
+                </StatusBarItem>
+                <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Margin="16,0" Background="#34495E"/>
+                <StatusBarItem HorizontalAlignment="Right">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="📍 " Foreground="#BDC3C7" FontSize="13"/>
+                        <TextBlock x:Name="txtMousePosition" Text="0, 0" FontFamily="Consolas" Foreground="White" FontSize="13"/>
+                    </StackPanel>
+                </StatusBarItem>
+            </StatusBar>
+        </Border>
+
+        <!-- Main Content -->
+        <Grid Background="Transparent" VerticalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />  <!-- Drawing area column -->
+            </Grid.ColumnDefinitions>
+
+            <!-- Centered drawing area with shadow and border -->
+            <Grid>
+                <Border CornerRadius="18" Background="White" BorderBrush="#D0D7E2" BorderThickness="2">
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="18" ShadowDepth="0" Opacity="0.18" />
+                    </Border.Effect>
+                    <Canvas x:Name="drawingCanvas"
+                            Background="White"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            MouseLeftButtonDown="drawingCanvas_MouseLeftButtonDown"
+                            MouseMove="drawingCanvas_MouseMove"
+                            MouseLeftButtonUp="drawingCanvas_MouseLeftButtonUp"
+                            MouseRightButtonDown="drawingCanvas_MouseRightButtonDown"/>
+                </Border>
+                <!-- Grid overlay, centered over drawing canvas -->
+                <Canvas x:Name="gridCanvas"
+                        Width="1000" Height="700"
+                        Background="Transparent"
+                        IsHitTestVisible="False"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"/>
+            </Grid>
+        </Grid>
+    </DockPanel>
+</Window>

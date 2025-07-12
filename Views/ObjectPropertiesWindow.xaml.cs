@@ -18,7 +18,10 @@ namespace Exploder.Views
         public string LinkTypeString => (cmbLinkType.SelectedItem as ComboBoxItem)?.Content?.ToString() ?? "None";
         public string LinkTarget => txtLinkTarget.Text;
         public string TextColor => cmbTextColor.SelectedItem?.ToString() ?? "#000000";
-        public double TextSize => double.TryParse(cmbTextSize.SelectedItem?.ToString(), out var size) ? size : 12.0;
+        public double StrokeThickness => double.TryParse((cmbTextSize.SelectedItem as ComboBoxItem)?.Content?.ToString(), out var size) ? size : 1.0;
+        public string TextContent => txtTextContent.Text;
+        public string SelectedFontFamily => (cmbFontFamily.SelectedItem as ComboBoxItem)?.Content?.ToString() ?? "Arial";
+        public double SelectedFontSize => double.TryParse((cmbFontSize.SelectedItem as ComboBoxItem)?.Content?.ToString(), out var size) ? size : 12.0;
 
         public ObjectPropertiesWindow(ExploderObject obj)
         {
@@ -30,9 +33,18 @@ namespace Exploder.Views
             cmbTextColor.ItemsSource = colorList;
             cmbButtonColor.SelectedItem = obj.FillColor ?? "#FFFFFF";
             cmbTextColor.SelectedItem = obj.StrokeColor ?? "#000000";
-            // Populate text size combo
-            cmbTextSize.ItemsSource = new[] { "8", "10", "12", "14", "16", "18", "20", "24", "28", "32", "36", "48", "72" };
-            cmbTextSize.SelectedItem = obj.FontSize.ToString();
+            // Populate stroke thickness combo
+            cmbTextSize.SelectedItem = obj.StrokeThickness.ToString();
+            
+            // Initialize text content
+            txtTextContent.Text = obj.Text ?? "";
+            
+            // Initialize font family
+            cmbFontFamily.SelectedItem = obj.FontFamily ?? "Arial";
+            
+            // Initialize font size
+            cmbFontSize.SelectedItem = obj.FontSize.ToString();
+            
             cmbLinkType.SelectedIndex = 0;
             txtButtonContent.Text = obj.ObjectName;
             txtLinkTarget.Text = obj.LinkTarget;
@@ -66,7 +78,10 @@ namespace Exploder.Views
                 ObjectData.ObjectName = txtButtonContent.Text;
                 ObjectData.FillColor = ButtonColor;
                 ObjectData.StrokeColor = TextColor;
-                ObjectData.FontSize = TextSize;
+                ObjectData.StrokeThickness = StrokeThickness;
+                ObjectData.Text = TextContent;
+                ObjectData.FontFamily = SelectedFontFamily;
+                ObjectData.FontSize = SelectedFontSize;
                 ObjectData.LinkTarget = txtLinkTarget.Text;
                 ObjectData.LinkType = LinkType.None;
                 switch (LinkTypeString)

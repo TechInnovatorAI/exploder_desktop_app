@@ -2,6 +2,7 @@
 using Exploder.Models;
 using Exploder.Services;
 using Microsoft.Win32;
+using System.IO.Compression;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -43,15 +44,20 @@ namespace Exploder.Views
         private Stack<PageData> undoStack = new Stack<PageData>();
         private Stack<PageData> redoStack = new Stack<PageData>();
 
+        // Copy/Paste support
+        private ExploderObject? clipboardObject;
+
         private Dictionary<UIElement, Canvas> linkedPages = new Dictionary<UIElement, Canvas>();
         private Canvas? mainCanvasBackup;
         private Canvas? mainPageCanvas;
 
         private List<Button> viewModeButtons = new List<Button>();
+        private readonly IPublishingService _publishingService;
 
         public MainWindow()
         {
             InitializeComponent();
+            _publishingService = new PublishingService();
             SetMode(AppMode.View);
             UpdateStatus("Ready");
             UpdateObjectCount();
@@ -631,10 +637,65 @@ namespace Exploder.Views
             }
         }
 
-        private void MenuPublish_Click(object sender, RoutedEventArgs e)
+        private async void MenuPublish_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Publish functionality will be implemented in future versions.", 
-                "Publish", MessageBoxButton.OK, MessageBoxImage.Information);
+            if (currentProject == null)
+            {
+                MessageBox.Show("No project to publish. Please create or open a project first.", "No Project", 
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            var dialog = new SaveFileDialog
+            {
+                Title = "Publish Project",
+                Filter = "Exploder Published Project (*.exp)|*.exp|ZIP Package (*.zip)|*.zip|All Files (*.*)|*.*",
+                DefaultExt = ".exp",
+                FileName = $"{currentProject.ProjectName}_Published"
+            };
+
+            if (dialog.ShowDialog() == true)
+            {
+                try
+                {
+                    UpdateStatus("Publishing project...");
+                    
+                    bool success = false;
+                    string resultPath = string.Empty;
+
+                    if (dialog.FileName.EndsWith(".zip"))
+                    {
+                        // Create self-executing package
+                        resultPath = await _publishingService.CreateSelfExecutingPackageAsync(currentProject, dialog.FileName);
+                        success = !string.IsNullOrEmpty(resultPath);
+                    }
+                    else
+                    {
+                        // Create published project file
+                        success = await _publishingService.PublishProjectAsync(currentProject, dialog.FileName);
+                        resultPath = dialog.FileName;
+                    }
+
+                    if (success)
+                    {
+                        UpdateStatus($"Project published successfully: {System.IO.Path.GetFileName(resultPath)}");
+                        MessageBox.Show($"Project published successfully!\n\nFile: {resultPath}", "Publishing Complete", 
+                            MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    else
+                    {
+                        UpdateStatus("Publishing failed");
+                        MessageBox.Show("Failed to publish project. Please check that all referenced files exist.", "Publishing Failed", 
+                            MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    UpdateStatus("Publishing failed");
+                    MessageBox.Show($"Error publishing project: {ex.Message}", "Publishing Error", 
+                        MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
         }
 
         private void MenuObjects_Click(object sender, RoutedEventArgs e)
@@ -734,6 +795,76 @@ namespace Exploder.Views
         {
             // Implement redo functionality
             UpdateStatus("Redo not implemented yet");
+        }
+
+        private void btnCopy_Click(object sender, RoutedEventArgs e)
+        {
+            if (selectedObject is FrameworkElement fe && fe.Tag is ExploderObject obj)
+            {
+                clipboardObject = CloneObject(obj);
+                UpdateStatus("Object copied to clipboard");
+            }
+            else
+            {
+                UpdateStatus("No object selected to copy");
+            }
+        }
+
+        private void btnPaste_Click(object sender, RoutedEventArgs e)
+        {
+            if (clipboardObject != null && currentPage != null)
+            {
+                var pastedObject = CloneObject(clipboardObject);
+                pastedObject.ObjectId = Guid.NewGuid().ToString();
+                pastedObject.Left += 20; // Offset slightly from original
+                pastedObject.Top += 20;
+                
+                currentPage.Objects.Add(pastedObject);
+                CreateUIElementFromObject(pastedObject);
+                UpdateObjectCount();
+                UpdateStatus("Object pasted");
+            }
+            else
+            {
+                UpdateStatus("No object in clipboard to paste");
+            }
+        }
+
+        private ExploderObject CloneObject(ExploderObject original)
+        {
+            return new ExploderObject
+            {
+                ObjectId = Guid.NewGuid().ToString(),
+                ObjectName = original.ObjectName + " (Copy)",
+                ObjectType = original.ObjectType,
+                Left = original.Left,
+                Top = original.Top,
+                Width = original.Width,
+                Height = original.Height,
+                FillColor = original.FillColor,
+                StrokeColor = original.StrokeColor,
+                StrokeThickness = original.StrokeThickness,
+                Opacity = original.Opacity,
+                Text = original.Text,
+                FontFamily = original.FontFamily,
+                FontSize = original.FontSize,
+                FontWeight = original.FontWeight,
+                X1 = original.X1,
+                Y1 = original.Y1,
+                X2 = original.X2,
+                Y2 = original.Y2,
+                ImagePath = original.ImagePath,
+                ImageSource = original.ImageSource,
+                LinkType = original.LinkType,
+                LinkTarget = original.LinkTarget,
+                LinkPageId = original.LinkPageId,
+                LinkDocumentPath = original.LinkDocumentPath,
+                LinkUrl = original.LinkUrl,
+                ExcelRange = original.ExcelRange,
+                ZIndex = original.ZIndex,
+                GroupId = original.GroupId,
+                IsGrouped = original.IsGrouped
+            };
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
@@ -1356,6 +1487,14 @@ namespace Exploder.Views
             else if (e.Key == Key.Y && Keyboard.Modifiers == ModifierKeys.Control)
             {
                 btnRedo_Click(sender, e);
+            }
+            else if (e.Key == Key.C && Keyboard.Modifiers == ModifierKeys.Control)
+            {
+                btnCopy_Click(sender, e);
+            }
+            else if (e.Key == Key.V && Keyboard.Modifiers == ModifierKeys.Control)
+            {
+                btnPaste_Click(sender, e);
             }
         }
     }

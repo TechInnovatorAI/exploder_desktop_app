@@ -46,15 +46,17 @@
             <!-- Drawing Tools -->
             <Button x:Name="btnCircleTool" Content="⭕" Margin="5,0" Padding="10,4" Click="btnCircleTool_Click" ToolTip="Circle tool"/>
             <Button x:Name="btnSquareTool" Content="⬜" Margin="5,0" Padding="10,4" Click="btnSquareTool_Click" ToolTip="Rectangle tool"/>
-            <Button x:Name="btnRoundedRectTool" Content="⬭" Margin="5,0" Padding="10,4" Click="btnRoundedRectTool_Click" IsEnabled="False" ToolTip="Rounded rectangle tool"/>
+            <Button x:Name="btnRoundedRectTool" Content="⬭" Margin="5,0" Padding="10,4" Click="btnRoundedRectTool_Click" ToolTip="Rounded rectangle tool"/>
             <Button x:Name="btnTriangleTool" Content="△" Margin="5,0" Padding="10,4" Click="btnTriangleTool_Click" ToolTip="Triangle tool"/>
-            <Button x:Name="btnLineTool" Content="╱" Margin="5,0" Padding="10,4" Click="btnLineTool_Click" IsEnabled="False" ToolTip="Line tool"/>
-            <Button x:Name="btnTextTool" Content="T" Margin="5,0" Padding="10,4" Click="btnTextTool_Click" IsEnabled="False" ToolTip="Text tool"/>
-            <Button x:Name="btnImageTool" Content="🖼" Margin="5,0" Padding="10,4" Click="btnImageTool_Click" IsEnabled="False" ToolTip="Image tool"/>
+            <Button x:Name="btnLineTool" Content="╱" Margin="5,0" Padding="10,4" Click="btnLineTool_Click" ToolTip="Line tool"/>
+            <Button x:Name="btnTextTool" Content="T" Margin="5,0" Padding="10,4" Click="btnTextTool_Click" ToolTip="Text tool"/>
+            <Button x:Name="btnImageTool" Content="🖼" Margin="5,0" Padding="10,4" Click="btnImageTool_Click" ToolTip="Image tool"/>
             <Separator Margin="16,0"/>
             <!-- Edit Tools -->
             <Button x:Name="btnUndo" Content="↶" Margin="5,0" Padding="10,4" Click="btnUndo_Click" ToolTip="Undo (Ctrl+Z)"/>
             <Button x:Name="btnRedo" Content="↷" Margin="5,0" Padding="10,4" Click="btnRedo_Click" ToolTip="Redo (Ctrl+Y)"/>
+            <Button x:Name="btnCopy" Content="📋" Margin="5,0" Padding="10,4" Click="btnCopy_Click" ToolTip="Copy selected object (Ctrl+C)"/>
+            <Button x:Name="btnPaste" Content="📄" Margin="5,0" Padding="10,4" Click="btnPaste_Click" ToolTip="Paste object (Ctrl+V)"/>
             <Button x:Name="btnDelete" Content="🗑" Margin="5,0" Padding="10,4" Click="btnDelete_Click" ToolTip="Delete selected object (Del)"/>
             <Separator Margin="16,0"/>
             <!-- Navigation -->

@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 
 namespace Exploder.Views
@@ -10,13 +13,115 @@ namespace Exploder.Views
     public partial class SplashWindow : Window
     {
         private DispatcherTimer? loadTimer;
+        private DispatcherTimer? imageTimer;
         private double loadProgress = 0;
         private bool isLoading = true;
+        private List<string> splashImages = new List<string>();
+        private int currentImageIndex = 0;
 
         public SplashWindow()
         {
             InitializeComponent();
+            LoadSplashImages();
             StartLoading();
+        }
+
+        private void LoadSplashImages()
+        {
+            try
+            {
+                // Add splash images in order using resource URIs
+                for (int i = 1; i <= 10; i++)
+                {
+                    string resourcePath = $"/Infrastructure/Assets/Splash{i}.png";
+                    splashImages.Add(resourcePath);
+                }
+
+                // Add the istockphoto image
+                splashImages.Add("/Infrastructure/Assets/istockphoto-1009436554-612x612.png");
+
+                // Start image rotation timer
+                if (splashImages.Count > 0)
+                {
+                    imageTimer = new DispatcherTimer();
+                    imageTimer.Interval = TimeSpan.FromSeconds(1.5); // Change image every 1.5 seconds
+                    imageTimer.Tick += ImageTimer_Tick;
+                    imageTimer.Start();
+                    
+                    // Load first image
+                    LoadCurrentImage();
+                }
+            }
+            catch (Exception ex)
+            {
+                // If there's an error loading images, continue without them
+                System.Diagnostics.Debug.WriteLine($"Error loading splash images: {ex.Message}");
+            }
+        }
+
+        private void ImageTimer_Tick(object? sender, EventArgs e)
+        {
+            if (splashImages.Count > 0)
+            {
+                // Fade out current image
+                var fadeOut = new DoubleAnimation
+                {
+                    From = 1.0,
+                    To = 0.0,
+                    Duration = TimeSpan.FromMilliseconds(300)
+                };
+                
+                fadeOut.Completed += (s, e) =>
+                {
+                    // Change to next image
+                    currentImageIndex = (currentImageIndex + 1) % splashImages.Count;
+                    LoadCurrentImage();
+                    
+                    // Fade in new image
+                    var fadeIn = new DoubleAnimation
+                    {
+                        From = 0.0,
+                        To = 1.0,
+                        Duration = TimeSpan.FromMilliseconds(300)
+                    };
+                    SplashImage.BeginAnimation(UIElement.OpacityProperty, fadeIn);
+                };
+                
+                SplashImage.BeginAnimation(UIElement.OpacityProperty, fadeOut);
+            }
+        }
+
+        private void LoadCurrentImage()
+        {
+            try
+            {
+                if (currentImageIndex < splashImages.Count)
+                {
+                    BitmapImage bitmap = new BitmapImage();
+                    bitmap.BeginInit();
+                    bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                    bitmap.UriSource = new Uri(splashImages[currentImageIndex], UriKind.Relative);
+                    bitmap.EndInit();
+                    
+                    SplashImage.Source = bitmap;
+                    
+                    // For the first image, fade in immediately
+                    if (currentImageIndex == 0)
+                    {
+                        var fadeIn = new DoubleAnimation
+                        {
+                            From = 0.0,
+                            To = 1.0,
+                            Duration = TimeSpan.FromMilliseconds(300)
+                        };
+                        SplashImage.BeginAnimation(UIElement.OpacityProperty, fadeIn);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error loading image {currentImageIndex}: {ex.Message}");
+            }
         }
 
         private async void StartLoading()
@@ -94,6 +199,7 @@ namespace Exploder.Views
         {
             isLoading = false;
             loadTimer?.Stop();
+            imageTimer?.Stop();
             base.OnClosed(e);
         }
     }

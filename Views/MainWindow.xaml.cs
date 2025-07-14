@@ -54,6 +54,12 @@ namespace Exploder.Views
         private List<Button> viewModeButtons = new List<Button>();
         private readonly IPublishingService _publishingService;
 
+        // Drag-and-drop state
+        private bool isDraggingObject = false;
+        private UIElement? draggingObject = null;
+        private Point dragStartPoint;
+        private Point objectStartPoint;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -287,7 +293,7 @@ namespace Exploder.Views
                 FontFamily = new FontFamily(obj.FontFamily),
                 FontSize = obj.FontSize,
                 FontWeight = obj.FontWeight == "Bold" ? FontWeights.Bold : FontWeights.Normal,
-                Foreground = (SolidColorBrush)new BrushConverter().ConvertFromString(obj.StrokeColor) ?? System.Windows.Media.Brushes.Black,
+                Foreground = (SolidColorBrush)new BrushConverter().ConvertFromString(obj.TextColor ?? "#000000"),
                 Opacity = obj.Opacity,
                 TextWrapping = TextWrapping.Wrap
             };
@@ -337,7 +343,18 @@ namespace Exploder.Views
                 // In insert mode, clicking on objects should select them for editing
                 SelectObject(sender as UIElement);
             }
-            
+            else if (currentMode == AppMode.Apply)
+            {
+                // Start drag
+                if (sender is UIElement element)
+                {
+                    isDraggingObject = true;
+                    draggingObject = element;
+                    dragStartPoint = e.GetPosition(drawingCanvas);
+                    objectStartPoint = new Point(Canvas.GetLeft(element), Canvas.GetTop(element));
+                    drawingCanvas.CaptureMouse();
+                }
+            }
             e.Handled = true;
         }
 
@@ -362,7 +379,7 @@ namespace Exploder.Views
                         NavigateToPage(obj.LinkPageId);
                         break;
                     case LinkType.Document:
-                        OpenDocument(obj.LinkDocumentPath);
+                        OpenDocument(obj.LinkDocumentPath, obj.LinkFileType);
                         break;
                     case LinkType.Url:
                         OpenUrl(obj.LinkUrl);
@@ -414,7 +431,7 @@ namespace Exploder.Views
             }
         }
 
-        private void OpenDocument(string path)
+        private void OpenDocument(string path, LinkFileType fileType)
         {
             if (string.IsNullOrEmpty(path) || !File.Exists(path))
             {
@@ -422,6 +439,34 @@ namespace Exploder.Views
                 return;
             }
 
+            string ext = System.IO.Path.GetExtension(path).ToLower();
+            bool valid = true;
+            string expected = "";
+            string app = "";
+            switch (fileType)
+            {
+                case LinkFileType.Video:
+                    valid = ext == ".mp4" || ext == ".avi" || ext == ".mov" || ext == ".wmv" || ext == ".flv";
+                    expected = ".mp4, .avi, .mov, .wmv, .flv";
+                    break;
+                case LinkFileType.PDF:
+                    valid = ext == ".pdf";
+                    expected = ".pdf";
+                    break;
+                case LinkFileType.Excel:
+                    valid = ext == ".xlsx" || ext == ".xls";
+                    expected = ".xlsx, .xls";
+                    break;
+                case LinkFileType.Word:
+                    valid = ext == ".docx" || ext == ".doc";
+                    expected = ".docx, .doc";
+                    break;
+            }
+            if (!valid)
+            {
+                MessageBox.Show($"File type does not match the expected type for this link.\nExpected: {expected}\nActual: {ext}", "File Type Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
             try
             {
                 Process.Start(new ProcessStartInfo
@@ -491,14 +536,29 @@ namespace Exploder.Views
             // Clear previous selection
             if (selectedObject != null)
             {
-                // Remove selection visual
+                if (selectedObject is Shape shape)
+                    shape.Effect = null;
+                else if (selectedObject is TextBlock tb)
+                    tb.Effect = null;
+                else if (selectedObject is Image img)
+                    img.Effect = null;
             }
-
             selectedObject = element;
-            
             if (selectedObject != null)
             {
-                // Add selection visual
+                var effect = new System.Windows.Media.Effects.DropShadowEffect
+                {
+                    Color = Colors.Blue,
+                    BlurRadius = 10,
+                    ShadowDepth = 0,
+                    Opacity = 0.7
+                };
+                if (selectedObject is Shape shape)
+                    shape.Effect = effect;
+                else if (selectedObject is TextBlock tb)
+                    tb.Effect = effect;
+                else if (selectedObject is Image img)
+                    img.Effect = effect;
                 UpdateStatus($"Selected: {((selectedObject as FrameworkElement)?.Tag as ExploderObject)?.ObjectName ?? "Unknown"}");
             }
         }
@@ -849,6 +909,7 @@ namespace Exploder.Views
                 FontFamily = original.FontFamily,
                 FontSize = original.FontSize,
                 FontWeight = original.FontWeight,
+                TextColor = original.TextColor,
                 X1 = original.X1,
                 Y1 = original.Y1,
                 X2 = original.X2,
@@ -1362,6 +1423,7 @@ namespace Exploder.Views
 
             try
             {
+                currentProject.Sanitize();
                 var projectPath = System.IO.Path.Combine(currentProject.ProjectPath, $"{currentProject.ProjectName}.exp");
                 SaveProjectToFile(projectPath);
                 UpdateStatus($"Project saved: {System.IO.Path.GetFileName(projectPath)}");
@@ -1379,6 +1441,7 @@ namespace Exploder.Views
 
             try
             {
+                currentProject.Sanitize();
                 var json = JsonSerializer.Serialize(currentProject, new JsonSerializerOptions 
                 { 
                     WriteIndented = true 

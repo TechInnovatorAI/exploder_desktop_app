@@ -20,6 +20,7 @@ namespace Exploder.Services
 
                 // Create a copy of the project for publishing (remove edit-specific data)
                 var publishedProject = CreatePublishedVersion(project);
+                publishedProject.Sanitize();
 
                 // Serialize the published project
                 var json = JsonSerializer.Serialize(publishedProject, new JsonSerializerOptions 
@@ -50,6 +51,7 @@ namespace Exploder.Services
         {
             try
             {
+                project.Sanitize();
                 // Create a temporary directory for the package
                 var tempDir = Path.Combine(Path.GetTempPath(), $"Exploder_Publish_{Guid.NewGuid()}");
                 Directory.CreateDirectory(tempDir);

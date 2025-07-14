@@ -9,6 +9,16 @@ namespace Exploder.Models
         public PageSettings PageSettings { get; set; } = new PageSettings();
         public List<PageData> Pages { get; set; } = new List<PageData>();
         public List<string> RecentProjects { get; set; } = new List<string>();
+
+        // Sanitizer: Ensures all double values are finite
+        public void Sanitize()
+        {
+            PageSettings.Sanitize();
+            foreach (var page in Pages)
+            {
+                page.Sanitize();
+            }
+        }
     }
 
     public class PageSettings
@@ -36,6 +46,13 @@ namespace Exploder.Models
                 Height = this.Height
             };
         }
+
+        public void Sanitize()
+        {
+            if (double.IsNaN(MarginSize) || double.IsInfinity(MarginSize)) MarginSize = 0;
+            if (double.IsNaN(Width) || double.IsInfinity(Width)) Width = 0;
+            if (double.IsNaN(Height) || double.IsInfinity(Height)) Height = 0;
+        }
     }
 
     public class PageData
@@ -45,6 +62,15 @@ namespace Exploder.Models
         public string ParentPageId { get; set; } = "";
         public List<ExploderObject> Objects { get; set; } = new List<ExploderObject>();
         public PageSettings PageSettings { get; set; } = new PageSettings();
+
+        public void Sanitize()
+        {
+            PageSettings.Sanitize();
+            foreach (var obj in Objects)
+            {
+                obj.Sanitize();
+            }
+        }
     }
 
     public class ExploderObject
@@ -67,6 +93,7 @@ namespace Exploder.Models
         public string FontFamily { get; set; } = "Arial";
         public double FontSize { get; set; } = 12.0;
         public string FontWeight { get; set; } = "Normal";
+        public string TextColor { get; set; } = "#000000";
         // Line properties
         public double X1 { get; set; }
         public double Y1 { get; set; }
@@ -77,6 +104,7 @@ namespace Exploder.Models
         public string ImageSource { get; set; } = ""; // Relative or absolute path
         // Link properties
         public LinkType LinkType { get; set; } = LinkType.None;
+        public LinkFileType LinkFileType { get; set; } = LinkFileType.None;
         public string LinkTarget { get; set; } = "";
         public string LinkPageId { get; set; } = "";
         public string LinkDocumentPath { get; set; } = "";
@@ -87,6 +115,21 @@ namespace Exploder.Models
         // Group properties
         public string GroupId { get; set; } = "";
         public bool IsGrouped { get; set; } = false;
+
+        public void Sanitize()
+        {
+            if (double.IsNaN(Left) || double.IsInfinity(Left)) Left = 0;
+            if (double.IsNaN(Top) || double.IsInfinity(Top)) Top = 0;
+            if (double.IsNaN(Width) || double.IsInfinity(Width)) Width = 0;
+            if (double.IsNaN(Height) || double.IsInfinity(Height)) Height = 0;
+            if (double.IsNaN(StrokeThickness) || double.IsInfinity(StrokeThickness)) StrokeThickness = 1.0;
+            if (double.IsNaN(Opacity) || double.IsInfinity(Opacity)) Opacity = 1.0;
+            if (double.IsNaN(FontSize) || double.IsInfinity(FontSize)) FontSize = 12.0;
+            if (double.IsNaN(X1) || double.IsInfinity(X1)) X1 = 0;
+            if (double.IsNaN(Y1) || double.IsInfinity(Y1)) Y1 = 0;
+            if (double.IsNaN(X2) || double.IsInfinity(X2)) X2 = 0;
+            if (double.IsNaN(Y2) || double.IsInfinity(Y2)) Y2 = 0;
+        }
     }
 
     public enum LinkType
@@ -96,6 +139,15 @@ namespace Exploder.Models
         Document,
         Url,
         ExcelData
+    }
+
+    public enum LinkFileType
+    {
+        None,
+        Video,
+        PDF,
+        Excel,
+        Word
     }
 
     public class ExcelRange

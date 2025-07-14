@@ -30,6 +30,7 @@ namespace Exploder.Services
 
         public async Task SaveProjectAsync(ProjectData project, string filePath)
         {
+            project.Sanitize();
             var json = JsonSerializer.Serialize(project, new JsonSerializerOptions 
             { 
                 WriteIndented = true 

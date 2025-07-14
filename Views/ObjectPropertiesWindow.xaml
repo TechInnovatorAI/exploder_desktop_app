@@ -1,61 +1,129 @@
 <Window x:Class="Exploder.Views.ObjectPropertiesWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Shape Properties" Height="350" Width="400" WindowStartupLocation="CenterOwner" ResizeMode="NoResize">
-    <Grid Margin="16">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="120"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+        Title="Object Properties" Height="600" Width="480" MinWidth="400" MinHeight="500"
+        WindowStartupLocation="CenterOwner" ResizeMode="CanResize">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="20" Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Stretch" >
+            <TextBlock Text="Object Properties" FontSize="20" FontWeight="Bold" Margin="0,0,0,16"/>
+            <GroupBox Header="Appearance" Margin="0,0,0,12">
+                <Grid Margin="8">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="140"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Button Content:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"/>
+                    <TextBox x:Name="txtButtonContent" Grid.Row="0" Grid.Column="1" Margin="4"/>
 
-        <TextBlock Text="Button Content:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"/>
-        <TextBox x:Name="txtButtonContent" Grid.Row="0" Grid.Column="1" Margin="4"/>
+                    <TextBlock Text="Fill Color:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"/>
+                    <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" Margin="4">
+                        <ComboBox x:Name="cmbButtonColor" Width="120"/>
+                        <TextBlock x:Name="lblButtonColorPreview" Text="\u25a0" FontWeight="Bold" FontSize="16" Margin="8,0,0,0" VerticalAlignment="Center"/>
+                    </StackPanel>
 
-        <TextBlock Text="Button Color:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"/>
-        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" Margin="4">
-            <ComboBox x:Name="cmbButtonColor" Width="120"/>
-            <TextBlock x:Name="lblButtonColorPreview" Text="A" FontWeight="Bold" FontSize="16" Margin="8,0,0,0" VerticalAlignment="Center"/>
+                    <TextBlock Text="Border Color:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center"/>
+                    <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" Margin="4">
+                        <ComboBox x:Name="cmbTextColor" Width="120"/>
+                        <TextBlock x:Name="lblTextColorPreview" Text="\u25a0" FontWeight="Bold" FontSize="16" Margin="8,0,0,0" VerticalAlignment="Center"/>
+                    </StackPanel>
+
+                    <TextBlock Text="Border Width:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center"/>
+                    <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal" Margin="4">
+                        <ComboBox x:Name="cmbTextSize" Width="60">
+                            <ComboBoxItem Content="1"/>
+                            <ComboBoxItem Content="2"/>
+                            <ComboBoxItem Content="3"/>
+                            <ComboBoxItem Content="5"/>
+                            <ComboBoxItem Content="8"/>
+                            <ComboBoxItem Content="10"/>
+                        </ComboBox>
+                        <TextBlock Text="px" VerticalAlignment="Center" Margin="4,0,0,0"/>
+                    </StackPanel>
+                </Grid>
+            </GroupBox>
+
+            <GroupBox Header="Text" Margin="0,0,0,12">
+                <Grid Margin="8">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="140"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Text Content:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="txtTextContent" Grid.Row="0" Grid.Column="1" Margin="4" Height="60" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"/>
+
+                    <TextBlock Text="Font Family:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"/>
+                    <ComboBox x:Name="cmbFontFamily" Grid.Row="1" Grid.Column="1" Margin="4">
+                        <ComboBoxItem Content="Arial"/>
+                        <ComboBoxItem Content="Calibri"/>
+                        <ComboBoxItem Content="Times New Roman"/>
+                        <ComboBoxItem Content="Courier New"/>
+                        <ComboBoxItem Content="Segoe UI"/>
+                        <ComboBoxItem Content="Verdana"/>
+                    </ComboBox>
+
+                    <TextBlock Text="Font Size:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center"/>
+                    <ComboBox x:Name="cmbFontSize" Grid.Row="2" Grid.Column="1" Margin="4" Width="80">
+                        <ComboBoxItem Content="8"/>
+                        <ComboBoxItem Content="10"/>
+                        <ComboBoxItem Content="12"/>
+                        <ComboBoxItem Content="14"/>
+                        <ComboBoxItem Content="16"/>
+                        <ComboBoxItem Content="18"/>
+                        <ComboBoxItem Content="20"/>
+                        <ComboBoxItem Content="24"/>
+                        <ComboBoxItem Content="28"/>
+                        <ComboBoxItem Content="32"/>
+                        <ComboBoxItem Content="36"/>
+                        <ComboBoxItem Content="48"/>
+                    </ComboBox>
+                </Grid>
+            </GroupBox>
+
+            <GroupBox Header="Link" Margin="0,0,0,12">
+                <Grid Margin="8">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="140"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Link Type:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"/>
+                    <ComboBox x:Name="cmbLinkType" Grid.Row="0" Grid.Column="1" Margin="4">
+                        <ComboBoxItem Content="None"/>
+                        <ComboBoxItem Content="Page"/>
+                        <ComboBoxItem Content="URL"/>
+                        <ComboBoxItem Content="Video"/>
+                        <ComboBoxItem Content="PDF"/>
+                        <ComboBoxItem Content="Excel"/>
+                        <ComboBoxItem Content="Word"/>
+                    </ComboBox>
+
+                    <TextBlock Text="Link Target:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"/>
+                    <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" Margin="4">
+                        <TextBox x:Name="txtLinkTarget" Width="180" ToolTip="For Page links: Enter the page name. For other links: Enter the target path or URL."/>
+                        <Button x:Name="btnBrowse" Content="..." Width="30" Margin="4,0,0,0" ToolTip="Browse for files (for Document links)"/>
+                    </StackPanel>
+                </Grid>
+            </GroupBox>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,16,0,0">
+                <Button x:Name="btnOK" Content="OK" Width="90" Margin="0,0,12,0" IsDefault="True"/>
+                <Button x:Name="btnCancel" Content="Cancel" Width="90" IsCancel="True"/>
+            </StackPanel>
         </StackPanel>
-
-        <TextBlock Text="Text Color:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center"/>
-        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" Margin="4">
-            <ComboBox x:Name="cmbTextColor" Width="120"/>
-            <TextBlock x:Name="lblTextColorPreview" Text="A" FontWeight="Bold" FontSize="16" Margin="8,0,0,0" VerticalAlignment="Center"/>
-        </StackPanel>
-
-        <TextBlock Text="Text Size:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center"/>
-        <ComboBox x:Name="cmbTextSize" Grid.Row="3" Grid.Column="1" Margin="4" Width="120"/>
-
-        <TextBlock Text="Link Type:" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center"/>
-        <ComboBox x:Name="cmbLinkType" Grid.Row="4" Grid.Column="1" Margin="4">
-            <ComboBoxItem Content="None"/>
-            <ComboBoxItem Content="Page"/>
-            <ComboBoxItem Content="URL"/>
-            <ComboBoxItem Content="Video"/>
-            <ComboBoxItem Content="PDF"/>
-            <ComboBoxItem Content="Excel"/>
-            <ComboBoxItem Content="Word"/>
-        </ComboBox>
-
-        <TextBlock Text="Link Target:" Grid.Row="5" Grid.Column="0" VerticalAlignment="Center"/>
-        <StackPanel Grid.Row="5" Grid.Column="1" Orientation="Horizontal" Margin="4">
-            <TextBox x:Name="txtLinkTarget" Width="180" ToolTip="For Page links: Enter the page name. For other links: Enter the target path or URL."/>
-            <Button x:Name="btnBrowse" Content="..." Width="30" Margin="4,0,0,0" ToolTip="Browse for files (for Document links)"/>
-        </StackPanel>
-
-        <StackPanel Grid.Row="6" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,12,0,0">
-            <Button x:Name="btnOK" Content="OK" Width="80" Margin="0,0,8,0" IsDefault="True"/>
-            <Button x:Name="btnCancel" Content="Cancel" Width="80" IsCancel="True"/>
-        </StackPanel>
-    </Grid>
+    </ScrollViewer>
 </Window> 

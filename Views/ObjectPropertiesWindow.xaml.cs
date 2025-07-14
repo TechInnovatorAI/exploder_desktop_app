@@ -18,7 +18,10 @@ namespace Exploder.Views
         public string LinkTypeString => (cmbLinkType.SelectedItem as ComboBoxItem)?.Content?.ToString() ?? "None";
         public string LinkTarget => txtLinkTarget.Text;
         public string TextColor => cmbTextColor.SelectedItem?.ToString() ?? "#000000";
-        public double TextSize => double.TryParse(cmbTextSize.SelectedItem?.ToString(), out var size) ? size : 12.0;
+        public double StrokeThickness => double.TryParse((cmbTextSize.SelectedItem as ComboBoxItem)?.Content?.ToString(), out var size) ? size : 1.0;
+        public string TextContent => txtTextContent.Text;
+        public string SelectedFontFamily => (cmbFontFamily.SelectedItem as ComboBoxItem)?.Content?.ToString() ?? "Arial";
+        public double SelectedFontSize => double.TryParse((cmbFontSize.SelectedItem as ComboBoxItem)?.Content?.ToString(), out var size) ? size : 12.0;
 
         public ObjectPropertiesWindow(ExploderObject obj)
         {
@@ -30,9 +33,18 @@ namespace Exploder.Views
             cmbTextColor.ItemsSource = colorList;
             cmbButtonColor.SelectedItem = obj.FillColor ?? "#FFFFFF";
             cmbTextColor.SelectedItem = obj.StrokeColor ?? "#000000";
-            // Populate text size combo
-            cmbTextSize.ItemsSource = new[] { "8", "10", "12", "14", "16", "18", "20", "24", "28", "32", "36", "48", "72" };
-            cmbTextSize.SelectedItem = obj.FontSize.ToString();
+            // Populate stroke thickness combo
+            cmbTextSize.SelectedItem = obj.StrokeThickness.ToString();
+            
+            // Initialize text content
+            txtTextContent.Text = obj.Text ?? "";
+            
+            // Initialize font family
+            cmbFontFamily.SelectedItem = obj.FontFamily ?? "Arial";
+            
+            // Initialize font size
+            cmbFontSize.SelectedItem = obj.FontSize.ToString();
+            
             cmbLinkType.SelectedIndex = 0;
             txtButtonContent.Text = obj.ObjectName;
             txtLinkTarget.Text = obj.LinkTarget;
@@ -66,17 +78,42 @@ namespace Exploder.Views
                 ObjectData.ObjectName = txtButtonContent.Text;
                 ObjectData.FillColor = ButtonColor;
                 ObjectData.StrokeColor = TextColor;
-                ObjectData.FontSize = TextSize;
+                ObjectData.StrokeThickness = StrokeThickness;
+                ObjectData.Text = TextContent;
+                ObjectData.FontFamily = SelectedFontFamily;
+                ObjectData.FontSize = SelectedFontSize;
                 ObjectData.LinkTarget = txtLinkTarget.Text;
                 ObjectData.LinkType = LinkType.None;
+                ObjectData.LinkFileType = LinkFileType.None;
+                ObjectData.LinkDocumentPath = "";
                 switch (LinkTypeString)
                 {
-                    case "Page": ObjectData.LinkType = LinkType.NewPage; break;
-                    case "URL": ObjectData.LinkType = LinkType.Url; break;
+                    case "Page":
+                        ObjectData.LinkType = LinkType.NewPage;
+                        break;
+                    case "URL":
+                        ObjectData.LinkType = LinkType.Url;
+                        break;
                     case "Video":
+                        ObjectData.LinkType = LinkType.Document;
+                        ObjectData.LinkFileType = LinkFileType.Video;
+                        ObjectData.LinkDocumentPath = txtLinkTarget.Text;
+                        break;
                     case "PDF":
+                        ObjectData.LinkType = LinkType.Document;
+                        ObjectData.LinkFileType = LinkFileType.PDF;
+                        ObjectData.LinkDocumentPath = txtLinkTarget.Text;
+                        break;
                     case "Excel":
-                    case "Word": ObjectData.LinkType = LinkType.Document; break;
+                        ObjectData.LinkType = LinkType.Document;
+                        ObjectData.LinkFileType = LinkFileType.Excel;
+                        ObjectData.LinkDocumentPath = txtLinkTarget.Text;
+                        break;
+                    case "Word":
+                        ObjectData.LinkType = LinkType.Document;
+                        ObjectData.LinkFileType = LinkFileType.Word;
+                        ObjectData.LinkDocumentPath = txtLinkTarget.Text;
+                        break;
                 }
             }
             DialogResult = true;
@@ -136,23 +173,28 @@ namespace Exploder.Views
         {
             var linkType = LinkTypeString;
             string filter = "";
-            
+            LinkFileType fileType = LinkFileType.None;
             switch (linkType)
             {
                 case "Video":
                     filter = "Video Files|*.mp4;*.avi;*.mov;*.wmv;*.flv|All Files|*.*";
+                    fileType = LinkFileType.Video;
                     break;
                 case "PDF":
                     filter = "PDF Files|*.pdf|All Files|*.*";
+                    fileType = LinkFileType.PDF;
                     break;
                 case "Excel":
                     filter = "Excel Files|*.xlsx;*.xls|All Files|*.*";
+                    fileType = LinkFileType.Excel;
                     break;
                 case "Word":
                     filter = "Word Files|*.docx;*.doc|All Files|*.*";
+                    fileType = LinkFileType.Word;
                     break;
                 default:
                     filter = "All Files|*.*";
+                    fileType = LinkFileType.None;
                     break;
             }
 
@@ -165,6 +207,11 @@ namespace Exploder.Views
             if (dialog.ShowDialog() == true)
             {
                 txtLinkTarget.Text = dialog.FileName;
+                if (ObjectData != null)
+                {
+                    ObjectData.LinkFileType = fileType;
+                    ObjectData.LinkDocumentPath = dialog.FileName;
+                }
             }
         }
 

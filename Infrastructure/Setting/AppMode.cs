@@ -1,4 +1,4 @@
-﻿namespace Exploder.Setting
+﻿namespace Exploder.Infrastructure.Setting
 {
     public enum AppMode
     {

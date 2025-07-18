@@ -102,6 +102,9 @@ namespace Exploder.Models
         // Image properties
         public string ImagePath { get; set; } = "";
         public string ImageSource { get; set; } = ""; // Relative or absolute path
+        public string StretchMode { get; set; } = "Uniform";
+        // URL properties
+        public string Url { get; set; } = "";
         // Link properties
         public LinkType LinkType { get; set; } = LinkType.None;
         public LinkFileType LinkFileType { get; set; } = LinkFileType.None;

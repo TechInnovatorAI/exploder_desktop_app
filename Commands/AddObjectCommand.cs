@@ -6,13 +6,11 @@ namespace Exploder.Commands
     {
         private readonly ExploderObject _object;
         private readonly PageData _page;
-        private readonly int _originalIndex;
 
         public AddObjectCommand(ExploderObject obj, PageData page)
         {
             _object = obj;
             _page = page;
-            _originalIndex = -1; // New object
         }
 
         public void Execute()

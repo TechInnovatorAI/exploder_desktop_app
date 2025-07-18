@@ -1,281 +1,208 @@
-# Exploder - Top-Down Documentation Program
+# Exploder - Interactive Documentation System
 
 ## Overview
 
-Exploder is a Windows-based documentation program designed for creating hierarchical, interactive documentation for complex items with multiple layers of information. It's similar to PowerPoint but specifically tailored for technical documentation, machine documentation, organizational charts, and business processes.
+Exploder is a top-down documentation program designed for creating interactive documentation with multiple layers. It provides capabilities similar to PowerPoint but is specifically tailored for technical documentation applications.
 
 ## Features
 
 ### Core Functionality
-- **Hierarchical Navigation**: Create multi-level documentation with clickable objects that navigate to detailed pages
-- **Multiple Object Types**: Support for circles, rectangles, rounded rectangles, triangles, lines, text, and images
-- **Interactive Links**: Objects can link to new pages, documents (PDF, Word, Excel, Video), URLs, or Excel data
-- **Page Management**: Create, navigate, and manage multiple pages within a project
-- **Project Persistence**: Save and load projects with automatic backup functionality
+- **Interactive Documentation**: Create multi-layered documentation with clickable objects
+- **Object Types**: Circles, rectangles, triangles, lines, text, images, and URLs
+- **Navigation**: Click objects to navigate to new pages or open documents
+- **Transparent Objects**: Create highlight effects with transparent fills
+- **Text Overlay**: Add text to any shape or object
+- **Resizable Images**: Resize images using corner handles in edit mode
 
-### User Interface
-- **Three Operating Modes**:
-  - **View Mode**: Navigate through documentation by clicking objects
-  - **Insert Mode**: Add new objects to pages
-  - **Edit Mode**: Modify existing objects and properties
-- **Modern UI**: Clean, professional interface with gradient backgrounds and intuitive controls
-- **Toolbar**: Quick access to drawing tools, edit functions, and navigation
-- **Status Bar**: Real-time information about project status, object count, and mouse position
+### File Support
+- **Documents**: PDF, Word, Excel, Video files
+- **Images**: JPG, PNG, GIF, BMP
+- **Links**: URLs, internal page navigation
+- **Excel Integration**: Select specific cell ranges from Excel files
 
-### Drawing Tools
-- **Circle Tool**: Create circular objects
-- **Rectangle Tool**: Create rectangular objects
-- **Rounded Rectangle Tool**: Create rectangles with rounded corners
-- **Triangle Tool**: Create triangular objects
-- **Line Tool**: Create lines and arrows
-- **Text Tool**: Add text objects with customizable fonts
-- **Image Tool**: Insert images from files
+### Project Management
+- **Project Creation**: Create new projects with custom page sizes and orientations
+- **Save/Load**: Save projects as .exp files with automatic backup
+- **Publish**: Create self-executing packages for distribution
+- **Print**: Print pages with all objects and formatting
 
-### Object Properties
-- **Visual Properties**: Fill color, border color, border thickness, opacity
-- **Text Properties**: Font family, font size, text content
-- **Link Properties**: Link type (None, Page, URL, Document), target specification
-- **Position Properties**: X/Y coordinates, width, height, Z-index
+## Getting Started
 
-### File Operations
-- **New Project**: Create projects with customizable page settings
-- **Open Project**: Load existing projects from file
-- **Save/Save As**: Save projects with automatic backup
-- **Recent Projects**: Quick access to recently opened projects (up to 10)
-- **Publishing**: Create self-executing packages or published project files
+### Installation
+1. Ensure you have .NET 9.0 or later installed
+2. Download and extract the Exploder application
+3. Run `Exploder.exe` to start the application
 
-### Advanced Features
-- **Copy/Paste**: Duplicate objects with keyboard shortcuts (Ctrl+C, Ctrl+V)
-- **Undo/Redo**: Command pattern implementation for editing operations
-- **Object Selection**: Click to select objects for editing
-- **Page Navigation**: Navigate between pages with breadcrumb trail
-- **Template System**: Built-in templates for common documentation types
+### Creating Your First Project
+1. **Start the Application**: Launch Exploder
+2. **Create New Project**: Click "New" and enter project details
+3. **Add Objects**: Use the toolbar to add shapes, text, and images
+4. **Set Properties**: Right-click objects to configure links and properties
+5. **Navigate**: Click objects to test navigation and document links
 
-## Installation
+## User Interface
 
-### Prerequisites
-- Windows 10 or later
-- .NET 9.0 Runtime
-- Visual Studio 2022 (for development)
+### Main Window
+- **Menu Bar**: File operations, design tools, and help
+- **Toolbar**: Quick access to drawing tools and modes
+- **Canvas**: Main drawing area where you place objects
+- **Status Bar**: Shows current mode and object count
 
-### Building from Source
-1. Clone the repository
-2. Open `Exploder.sln` in Visual Studio 2022
-3. Restore NuGet packages
-4. Build the solution
-5. Run the application
+### Modes
+- **View Mode**: Click objects to navigate (default)
+- **Insert Mode**: Add new objects to the page
+- **Edit Mode**: Move, resize, and modify existing objects
 
-### Running the Application
-1. Launch `Exploder.exe`
-2. The application will start with a splash screen
-3. Choose to create a new project or open an existing one
-4. Begin creating your documentation
+### Toolbar Tools
+- **Shapes**: Circle, Rectangle, Rounded Rectangle, Triangle, Line
+- **Content**: Text, URL, Image
+- **Edit**: Undo, Redo, Copy, Paste, Delete
+- **Navigation**: Back to Previous, Back to Main
 
-## Usage Guide
+## Object Properties
 
-### Creating a New Project
-1. Click "New Project" in the startup dialog
-2. Enter a project name
-3. Select a project folder
-4. Choose page settings:
-   - Page size (A4, Letter, etc.)
-   - Orientation (Portrait/Landscape)
-   - Margin size
-   - Background color
-   - Grid and ruler options
-5. Click "OK" to create the project
+### Basic Properties
+- **Name**: Object identifier
+- **Position**: X-Y coordinates on the page
+- **Size**: Width and height dimensions
+- **Colors**: Fill color, stroke color, transparency
+- **Opacity**: Overall transparency level
 
-### Adding Objects
-1. Switch to "Insert" mode using the toolbar button
-2. Select a drawing tool (circle, rectangle, etc.)
-3. Click and drag on the canvas to create the object
-4. The object properties dialog will appear
-5. Configure the object's properties and links
-6. Click "OK" to add the object
+### Link Properties
+- **Link Type**: None, Page, URL, Document, Excel Data
+- **Target**: Page name, URL, or file path
+- **File Type**: PDF, Word, Excel, Video, Image
 
-### Configuring Object Properties
-- **Basic Properties**: Name, fill color, border color, border thickness
-- **Text Properties**: Text content, font family, font size
-- **Link Properties**: 
-  - **None**: Object has no action when clicked
-  - **Page**: Navigate to a new or existing page
-  - **URL**: Open a web URL
-  - **Document**: Open a file (PDF, Word, Excel, Video)
-  - **Excel Data**: Link to specific Excel cells
+### Text Properties
+- **Content**: Text to display
+- **Font**: Family, size, weight
+- **Color**: Text color
+- **Alignment**: Text positioning
 
-### Navigating Documentation
-1. Switch to "View" mode
-2. Click on objects to navigate to their linked destinations
-3. Use "Back" button to return to previous page
-4. Use "Main" button to return to the main page
-5. Page breadcrumbs show your current location
+## File Menu
 
-### Publishing Projects
-1. Go to File → Publish
-2. Choose output format:
-   - **Exploder Project (.exp)**: Standard project file
-   - **ZIP Package (.zip)**: Self-executing package with HTML viewer
-3. Select output location
-4. Click "Save" to create the published version
+### New Project
+- Choose page size (A4, Letter, Custom)
+- Set orientation (Portrait/Landscape)
+- Configure margins and background
 
-## Project Structure
+### Open/Save
+- Open existing .exp project files
+- Save projects with automatic backup
+- Save As to different locations
 
-```
-Exploder/
-├── App.xaml                 # Application entry point
-├── App.xaml.cs              # Application logic
-├── Commands/                # Command pattern implementation
-│   ├── ICommand.cs          # Command interface
-│   ├── AddObjectCommand.cs  # Add object command
-│   └── DeleteObjectCommand.cs # Delete object command
-├── Infrastructure/          # Infrastructure components
-│   ├── Assets/              # Application assets
-│   └── Setting/             # Application settings
-│       ├── AppMode.cs       # Application modes
-│       └── SerializedElement.cs # Serialization support
-├── Models/                  # Data models
-│   ├── ProjectData.cs       # Project data structure
-│   └── PointData.cs         # Point data structure
-├── Services/                # Business logic services
-│   ├── IProjectService.cs   # Project service interface
-│   ├── ProjectService.cs    # Project service implementation
-│   ├── IPublishingService.cs # Publishing service interface
-│   ├── PublishingService.cs # Publishing service implementation
-│   ├── ITemplateService.cs  # Template service interface
-│   └── TemplateService.cs   # Template service implementation
-├── Views/                   # User interface views
-│   ├── MainWindow.xaml      # Main application window
-│   ├── MainWindow.xaml.cs   # Main window logic
-│   ├── ProjectOpenWindow.xaml # Project opening dialog
-│   ├── ProjectOpenWindow.xaml.cs # Project opening logic
-│   ├── ObjectPropertiesWindow.xaml # Object properties dialog
-│   ├── ObjectPropertiesWindow.xaml.cs # Object properties logic
-│   ├── SplashWindow.xaml    # Splash screen
-│   └── SplashWindow.xaml.cs # Splash screen logic
-└── ViewModels/              # View models (future MVVM implementation)
-```
+### Print
+- Print current page with all objects
+- Includes project and page information
+- Maintains object positioning and formatting
 
-## Architecture
+### Publish
+- Create self-executing package
+- Includes all linked documents
+- Portable distribution format
 
-### Design Patterns
-- **Command Pattern**: Used for undo/redo operations
-- **Service Pattern**: Business logic separated into services
-- **Model-View Separation**: Clear separation between data and presentation
+## Design Menu
 
-### Key Components
-- **ProjectData**: Central data model containing all project information
-- **ExploderObject**: Represents individual objects on pages
-- **PageData**: Represents individual pages within a project
-- **Services**: Handle business logic for projects, publishing, and templates
+### Objects
+- Access to all available object types
+- Quick object placement tools
 
-## Templates
+### Standard Documents
+- **PDF Document**: Add PDF file links
+- **Word Document**: Add Word file links
+- **Excel Spreadsheet**: Add Excel file links with range selection
+- **Video File**: Add video file links
+- **Image File**: Add image file links
 
-The application includes built-in templates for common documentation types:
+## Help Menu
 
-### Machine Documentation Template
-- Designed for documenting machinery with multiple components
-- Includes sample objects for engine, transmission, and hydraulics
-- Landscape orientation with grid for technical drawings
+### About
+- Program version information
+- Copyright and licensing details
 
-### Organizational Chart Template
-- Designed for creating organizational charts
-- Includes sample objects for CEO, CTO, and CFO positions
-- Portrait orientation with rounded rectangles
-
-### Business Documentation Template
-- Designed for business process documentation
-- Includes sample objects for process flow, policies, procedures, and forms
-- Portrait orientation with grid for structured layouts
-
-## File Formats
-
-### Project Files (.exp)
-- JSON-based format for storing project data
-- Contains all project information including pages, objects, and settings
-- Human-readable format for easy inspection and debugging
-
-### Published Files
-- **Standard (.exp)**: Read-only project file
-- **ZIP Package (.zip)**: Self-executing package with HTML viewer and assets
+### Help
+- This documentation
+- User guide and tutorials
 
 ## Keyboard Shortcuts
 
-- **Ctrl+N**: New project
-- **Ctrl+O**: Open project
-- **Ctrl+S**: Save project
-- **Ctrl+Shift+S**: Save project as
-- **Ctrl+C**: Copy selected object
-- **Ctrl+V**: Paste object
+- **Ctrl+N**: New Project
+- **Ctrl+O**: Open Project
+- **Ctrl+S**: Save Project
+- **Ctrl+Shift+S**: Save As
+- **Ctrl+P**: Print
+- **Ctrl+Z**: Undo
+- **Ctrl+Y**: Redo
+- **Ctrl+C**: Copy
+- **Ctrl+V**: Paste
 - **Delete**: Delete selected object
-- **Ctrl+Z**: Undo (planned)
-- **Ctrl+Y**: Redo (planned)
 
-## Future Enhancements
+## Tips and Best Practices
 
-### Phase 2 Features (Planned)
-- Enhanced object types (arrows, callouts, etc.)
-- Video and audio playback integration
-- Excel data integration with live updates
-- Advanced font selection and text formatting
-- Object grouping and alignment tools
-- Print functionality
-- Search and replace functionality
-- Project structure visualization
-- Database integration
-- STEP file support for CAD integration
+### Object Organization
+- Use descriptive names for objects
+- Group related objects together
+- Use consistent colors and styles
 
-### Advanced Features (Future)
-- Mobile app companion
-- Cloud-based collaboration
-- AI-assisted content organization
-- Integration with CAD software (SolidWorks, Altium)
-- Enterprise licensing system
-- Advanced scripting capabilities
+### Navigation Design
+- Create clear navigation paths
+- Use intuitive object names
+- Test navigation flow thoroughly
+
+### File Management
+- Keep linked files in organized folders
+- Use relative paths when possible
+- Regularly save and backup projects
+
+### Performance
+- Optimize image sizes for better performance
+- Limit the number of objects per page
+- Use appropriate file formats for documents
 
 ## Troubleshooting
 
 ### Common Issues
-1. **Application won't start**: Ensure .NET 9.0 Runtime is installed
-2. **Can't save projects**: Check folder permissions and available disk space
-3. **Images not loading**: Verify image file paths and formats
-4. **Links not working**: Ensure target files exist and paths are correct
 
-### Performance Tips
-- Use appropriate image sizes for better performance
-- Limit the number of objects per page for optimal navigation
-- Regularly save your work to prevent data loss
-- Use the grid feature for precise object placement
+**Object not responding to clicks**
+- Ensure you're in View mode
+- Check that the object has a link configured
+- Verify the target file/page exists
 
-## Contributing
+**Images not displaying**
+- Check file path is correct
+- Ensure image format is supported
+- Verify file permissions
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request
+**Print not working**
+- Check printer is connected and online
+- Verify page size settings
+- Ensure objects are within print margins
 
-## License
+**Excel links not working**
+- Verify Excel file path is correct
+- Check cell range syntax (e.g., A1:B10)
+- Ensure Excel is installed on target system
 
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## Support
-
-For support and questions:
-- Create an issue in the GitHub repository
-- Check the documentation in the Help menu
-- Review the troubleshooting section above
+### Support
+For additional support or feature requests, please refer to the project documentation or contact the development team.
 
 ## Version History
 
 ### Version 1.0 (Current)
 - Initial release with core functionality
 - Basic object types and navigation
-- Project saving and loading
-- Publishing capabilities
-- Template system
-- Copy/paste functionality
+- File linking and document support
+- Print and publish capabilities
+- Excel integration with range selection
 
----
+## Technical Requirements
 
-**Exploder Development Team**  
-© 2025 All rights reserved 
+- **Operating System**: Windows 10 or later
+- **Framework**: .NET 9.0
+- **Memory**: 4GB RAM minimum, 8GB recommended
+- **Storage**: 100MB for application, additional space for projects
+- **Display**: 1024x768 minimum resolution
+
+## License
+
+This software is provided as-is for educational and development purposes. Please refer to the license file for complete terms and conditions. 

@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET9_0;NETCOREAPP;WINDOWS;WINDOWS7_0;NET5_0_OR_GREATER;NET6_0_OR_GREATER;NET7_0_OR_GREATER;NET8_0_OR_GREATER;NET9_0_OR_GREATER;NETCOREAPP3_0_OR_GREATER;NETCOREAPP3_1_OR_GREATER;WINDOWS7_0_OR_GREATER
 D:\app\Exploder\App.xaml
-4-2127917626
+5-639459672
 
-201230237450
+26-755866557
 2001466749558
-Views\MainWindow.xaml;Views\ObjectPropertiesWindow.xaml;Views\ProjectOpenWindow.xaml;Views\SplashWindow.xaml;
+Views\MainWindow.xaml;Views\ObjectPropertiesWindow.xaml;Views\PageCreationWindow.xaml;Views\ProjectOpenWindow.xaml;Views\SplashWindow.xaml;
 
 False
 

@@ -2,7 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Exploder - Open or Create Project"
-        Height="500" Width="600"
+        Height="613" Width="584"
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanResize">
     <Grid Margin="15">
@@ -10,7 +10,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        
+
         <TabControl Name="tabControl" Grid.Row="0">
             <TabItem Header="New Project">
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -18,9 +18,16 @@
                         <Label Content="Project Name:" FontWeight="Bold"/>
                         <TextBox Name="txtProjectName" Width="400" Margin="0,5,0,10" 
                                  Text="New Project" ToolTip="Enter a name for your new project"/>
-
-                        <Label Content="Page Size:" FontWeight="Bold" Margin="0,10,0,0"/>
-                        <ComboBox Name="comboPageSize" Width="200" Margin="0,5,0,10" SelectionChanged="ComboPageSize_SelectionChanged">
+                        <Label Content="Page Size:" FontWeight="Bold" Width="523"/>
+                        <ComboBox x:Name="comboPageSize" Width="404" SelectionChanged="ComboPageSize_SelectionChanged" RenderTransformOrigin="0.5,0.5">
+                            <ComboBox.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform Angle="-0.001"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </ComboBox.RenderTransform>
                             <ComboBoxItem Content="A4 (210x297 mm)" IsSelected="True" Tag="A4"/>
                             <ComboBoxItem Content="Letter (8.5x11 in)" Tag="Letter"/>
                             <ComboBoxItem Content="Legal (8.5x14 in)" Tag="Legal"/>
@@ -67,12 +74,12 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
-                    
+
                     <Label Content="Recent Projects:" FontWeight="Bold" Grid.Row="0"/>
                     <ListBox Name="lstRecentProjects" Grid.Row="1" Margin="0,5,0,10" 
                              SelectionChanged="LstRecentProjects_SelectionChanged"
                              MouseDoubleClick="LstRecentProjects_MouseDoubleClick"/>
-                    
+
                     <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
                         <Button Name="btnOpenProject" Width="150" Height="30" Content="Open Selected Project" 
                                 Click="btnOpenProject_Click" IsEnabled="False"/>

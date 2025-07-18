@@ -189,6 +189,7 @@ namespace Exploder.Services
             return published;
         }
 
+        // This method is async for future extensibility (e.g., copying files asynchronously)
         private async Task CopyProjectAssetsAsync(ProjectData project, string targetDir)
         {
             var assetsDir = Path.Combine(targetDir, "assets");

@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "PZwWbJsMSEg=",
+  "dgSpecHash": "QQ0NnCvUqU4=",
   "success": true,
   "projectFilePath": "D:\\app\\Exploder\\Exploder.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\Administrator\\.nuget\\packages\\microsoft.visualbasic\\10.3.0\\microsoft.visualbasic.10.3.0.nupkg.sha512"
+  ],
   "logs": []
 }

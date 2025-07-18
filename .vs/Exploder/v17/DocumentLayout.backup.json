@@ -3,6 +3,22 @@
   "WorkspaceRootPath": "D:\\app\\Exploder\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{5B94AE5B-B1AF-41F9-BCB1-2FDD2A06BA02}|Exploder.csproj|d:\\app\\exploder\\views\\splashwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{5B94AE5B-B1AF-41F9-BCB1-2FDD2A06BA02}|Exploder.csproj|solutionrelative:views\\splashwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5B94AE5B-B1AF-41F9-BCB1-2FDD2A06BA02}|Exploder.csproj|d:\\app\\exploder\\views\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{5B94AE5B-B1AF-41F9-BCB1-2FDD2A06BA02}|Exploder.csproj|solutionrelative:views\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5B94AE5B-B1AF-41F9-BCB1-2FDD2A06BA02}|Exploder.csproj|d:\\app\\exploder\\views\\objectpropertieswindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{5B94AE5B-B1AF-41F9-BCB1-2FDD2A06BA02}|Exploder.csproj|solutionrelative:views\\objectpropertieswindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5B94AE5B-B1AF-41F9-BCB1-2FDD2A06BA02}|Exploder.csproj|d:\\app\\exploder\\views\\projectopenwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{5B94AE5B-B1AF-41F9-BCB1-2FDD2A06BA02}|Exploder.csproj|solutionrelative:views\\projectopenwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\app\\Exploder\\ProjectOpenWindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ProjectOpenWindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -93,11 +109,58 @@
         },
         {
           "DockedWidth": 107,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MainWindow.xaml",
+              "DocumentMoniker": "D:\\app\\Exploder\\Views\\MainWindow.xaml",
+              "RelativeDocumentMoniker": "Views\\MainWindow.xaml",
+              "ToolTip": "D:\\app\\Exploder\\Views\\MainWindow.xaml",
+              "RelativeToolTip": "Views\\MainWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-07-14T09:43:06.983Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ProjectOpenWindow.xaml",
+              "DocumentMoniker": "D:\\app\\Exploder\\Views\\ProjectOpenWindow.xaml",
+              "RelativeDocumentMoniker": "Views\\ProjectOpenWindow.xaml",
+              "ToolTip": "D:\\app\\Exploder\\Views\\ProjectOpenWindow.xaml",
+              "RelativeToolTip": "Views\\ProjectOpenWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-07-14T09:43:03.844Z"
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "SplashWindow.xaml",
+              "DocumentMoniker": "D:\\app\\Exploder\\Views\\SplashWindow.xaml",
+              "RelativeDocumentMoniker": "Views\\SplashWindow.xaml",
+              "ToolTip": "D:\\app\\Exploder\\Views\\SplashWindow.xaml",
+              "RelativeToolTip": "Views\\SplashWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-07-14T09:43:15.94Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ObjectPropertiesWindow.xaml",
+              "DocumentMoniker": "D:\\app\\Exploder\\Views\\ObjectPropertiesWindow.xaml",
+              "RelativeDocumentMoniker": "Views\\ObjectPropertiesWindow.xaml",
+              "ToolTip": "D:\\app\\Exploder\\Views\\ObjectPropertiesWindow.xaml",
+              "RelativeToolTip": "Views\\ObjectPropertiesWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-07-14T07:57:02.959Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "ProjectOpenWindow.xaml.cs",
               "DocumentMoniker": "D:\\app\\Exploder\\ProjectOpenWindow.xaml.cs",
               "RelativeDocumentMoniker": "ProjectOpenWindow.xaml.cs",
@@ -108,7 +171,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 5,
               "Title": "ProjectOpenWindow.xaml",
               "DocumentMoniker": "D:\\app\\Exploder\\ProjectOpenWindow.xaml",
               "RelativeDocumentMoniker": "ProjectOpenWindow.xaml",
@@ -119,7 +182,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 15,
               "Title": "MainWindow.xaml.cs",
               "DocumentMoniker": "D:\\app\\Exploder\\MainWindow.xaml.cs",
               "RelativeDocumentMoniker": "MainWindow.xaml.cs",
@@ -131,7 +194,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 6,
               "Title": "Exploder.csproj",
               "DocumentMoniker": "D:\\app\\Exploder\\Exploder.csproj",
               "RelativeDocumentMoniker": "Exploder.csproj",
@@ -143,7 +206,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 16,
               "Title": "MainWindow.xaml",
               "DocumentMoniker": "D:\\app\\Exploder\\MainWindow.xaml",
               "RelativeDocumentMoniker": "MainWindow.xaml",
@@ -154,18 +217,19 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 7,
               "Title": "App.xaml",
               "DocumentMoniker": "D:\\app\\Exploder\\App.xaml",
               "RelativeDocumentMoniker": "App.xaml",
               "ToolTip": "D:\\app\\Exploder\\App.xaml",
               "RelativeToolTip": "App.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-07-06T08:03:25.764Z"
+              "WhenOpened": "2025-07-06T08:03:25.764Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 17,
               "Title": "SplashWindow.xaml",
               "DocumentMoniker": "D:\\app\\Exploder\\SplashWindow.xaml",
               "RelativeDocumentMoniker": "SplashWindow.xaml",
@@ -176,7 +240,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 18,
               "Title": "SplashWindow.xaml.cs",
               "DocumentMoniker": "D:\\app\\Exploder\\SplashWindow.xaml.cs",
               "RelativeDocumentMoniker": "SplashWindow.xaml.cs",
@@ -188,7 +252,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 19,
               "Title": "ProjectData.cs",
               "DocumentMoniker": "D:\\app\\Exploder\\ProjectData.cs",
               "RelativeDocumentMoniker": "ProjectData.cs",
@@ -200,7 +264,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 20,
               "Title": "PointData.cs",
               "DocumentMoniker": "D:\\app\\Exploder\\PointData.cs",
               "RelativeDocumentMoniker": "PointData.cs",
@@ -212,7 +276,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 8,
               "Title": "App.xaml.cs",
               "DocumentMoniker": "D:\\app\\Exploder\\App.xaml.cs",
               "RelativeDocumentMoniker": "App.xaml.cs",
@@ -224,7 +288,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 9,
               "Title": "page.exploder",
               "DocumentMoniker": "D:\\app\\Exploder\\page.exploder",
               "RelativeDocumentMoniker": "page.exploder",
@@ -236,7 +300,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 10,
               "Title": ".filenesting.json",
               "DocumentMoniker": "D:\\app\\Exploder\\.filenesting.json",
               "RelativeDocumentMoniker": ".filenesting.json",
@@ -248,7 +312,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 21,
               "Title": "AppMode.cs",
               "DocumentMoniker": "D:\\app\\Exploder\\Setting\\AppMode.cs",
               "RelativeDocumentMoniker": "Setting\\AppMode.cs",
@@ -260,7 +324,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 11,
               "Title": "Microsoft.WinFX.targets",
               "DocumentMoniker": "C:\\Program Files\\dotnet\\sdk\\9.0.301\\Sdks\\Microsoft.NET.Sdk.WindowsDesktop\\targets\\Microsoft.WinFX.targets",
               "ToolTip": "C:\\Program Files\\dotnet\\sdk\\9.0.301\\Sdks\\Microsoft.NET.Sdk.WindowsDesktop\\targets\\Microsoft.WinFX.targets",
@@ -270,7 +334,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 12,
               "Title": "ShapeButton.g.cs",
               "DocumentMoniker": "D:\\app\\Exploder\\obj\\Debug\\net9.0-windows\\Controls\\ShapeButton.g.cs",
               "RelativeDocumentMoniker": "obj\\Debug\\net9.0-windows\\Controls\\ShapeButton.g.cs",
@@ -282,7 +346,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 13,
               "Title": "Microsoft.PackageDependencyResolution.targets",
               "DocumentMoniker": "C:\\Program Files\\dotnet\\sdk\\9.0.301\\Sdks\\Microsoft.NET.Sdk\\targets\\Microsoft.PackageDependencyResolution.targets",
               "ToolTip": "C:\\Program Files\\dotnet\\sdk\\9.0.301\\Sdks\\Microsoft.NET.Sdk\\targets\\Microsoft.PackageDependencyResolution.targets",
@@ -292,7 +356,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 14,
               "Title": "Microsoft.NET.Sdk.WindowsDesktop.targets",
               "DocumentMoniker": "C:\\Program Files\\dotnet\\sdk\\9.0.301\\Sdks\\Microsoft.NET.Sdk.WindowsDesktop\\targets\\Microsoft.NET.Sdk.WindowsDesktop.targets",
               "ToolTip": "C:\\Program Files\\dotnet\\sdk\\9.0.301\\Sdks\\Microsoft.NET.Sdk.WindowsDesktop\\targets\\Microsoft.NET.Sdk.WindowsDesktop.targets",
@@ -302,7 +366,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 22,
               "Title": "MainWindow.xaml",
               "DocumentMoniker": "D:\\app\\Exploder\\MainWindow.xaml",
               "RelativeDocumentMoniker": "MainWindow.xaml",

@@ -1,161 +1,89 @@
-# Exploder Application Test Plan
+# Exploder Test Plan
 
-## Test Environment
-- Windows 10/11
-- .NET 9.0 Runtime
-- Visual Studio 2022 (for development)
+## Copy, Cut, and Paste Functionality Testing
 
-## Test Categories
+### Test Cases
 
-### 1. Application Startup Tests
-- [ ] Application launches successfully
-- [ ] Splash screen displays correctly
-- [ ] Project opening dialog appears
-- [ ] Recent projects list loads (if any exist)
-- [ ] New project creation works
-- [ ] Project opening from file works
+#### 1. Copy Functionality
+- **Test Case**: Copy a selected object
+- **Steps**:
+  1. Create a new project
+  2. Add a shape (circle, rectangle, etc.) to the canvas
+  3. Select the shape by clicking on it
+  4. Click the copy button (📋) or press Ctrl+C
+  5. Verify status message shows "Object copied to clipboard"
+  6. Verify the original object remains unchanged
 
-### 2. Project Creation Tests
-- [ ] New project dialog displays all options
-- [ ] Project name validation works
-- [ ] Project folder selection works
-- [ ] Page size selection (A4, Letter, etc.)
-- [ ] Orientation selection (Portrait/Landscape)
-- [ ] Margin size configuration
-- [ ] Background color selection
-- [ ] Grid and ruler options
-- [ ] Project saves correctly
+#### 2. Cut Functionality
+- **Test Case**: Cut a selected object
+- **Steps**:
+  1. Create a new project
+  2. Add a shape to the canvas
+  3. Select the shape by clicking on it
+  4. Click the cut button (✂) or press Ctrl+X
+  5. Verify status message shows "Object cut to clipboard"
+  6. Verify the original object is removed from the canvas
+  7. Verify object count decreases
 
-### 3. User Interface Tests
-- [ ] Main window displays correctly
-- [ ] Menu bar is functional
-- [ ] Toolbar displays all tools
-- [ ] Status bar shows correct information
-- [ ] Project info bar displays project name and current page
-- [ ] Mode switching works (View/Insert/Edit)
-- [ ] All drawing tools are enabled and functional
+#### 3. Paste Functionality
+- **Test Case**: Paste a copied/cut object
+- **Steps**:
+  1. Copy or cut an object (from previous tests)
+  2. Click the paste button (📄) or press Ctrl+V
+  3. Verify status message shows "Object pasted"
+  4. Verify a new object appears on the canvas
+  5. Verify the new object is offset from the original position
+  6. Verify object count increases
 
-### 4. Drawing Tools Tests
-- [ ] Circle tool creates circular objects
-- [ ] Rectangle tool creates rectangular objects
-- [ ] Rounded Rectangle tool creates rounded rectangles
-- [ ] Triangle tool creates triangular objects
-- [ ] Line tool creates lines
-- [ ] Text tool creates text objects
-- [ ] Image tool loads images from files
-- [ ] Objects are placed correctly on canvas
-- [ ] Object properties dialog appears after creation
+#### 4. Undo/Redo with Copy/Cut/Paste
+- **Test Case**: Undo and redo copy/cut/paste operations
+- **Steps**:
+  1. Perform a cut operation
+  2. Press Ctrl+Z to undo
+  3. Verify the cut object is restored
+  4. Press Ctrl+Y to redo
+  5. Verify the cut operation is performed again
 
-### 5. Object Properties Tests
-- [ ] Object properties dialog opens correctly
-- [ ] Fill color selection works
-- [ ] Border color selection works
-- [ ] Border width selection works
-- [ ] Text content editing works
-- [ ] Font family selection works
-- [ ] Font size selection works
-- [ ] Link type selection works
-- [ ] Link target configuration works
-- [ ] File browsing for documents works
-- [ ] Properties are saved correctly
+#### 5. Keyboard Shortcuts
+- **Test Case**: Verify all keyboard shortcuts work
+- **Steps**:
+  1. Test Ctrl+C (Copy)
+  2. Test Ctrl+X (Cut)
+  3. Test Ctrl+V (Paste)
+  4. Test Ctrl+Z (Undo)
+  5. Test Ctrl+Y (Redo)
+  6. Test Delete key (Delete)
 
-### 6. Object Interaction Tests
-- [ ] Object selection works
-- [ ] Object deletion works
-- [ ] Copy/paste functionality works
-- [ ] Keyboard shortcuts work (Ctrl+C, Ctrl+V, Delete)
-- [ ] Object right-click context menu works
-- [ ] Object properties can be edited after creation
+#### 6. Edge Cases
+- **Test Case**: Copy/Cut/Paste with no selection
+- **Steps**:
+  1. Try to copy without selecting an object
+  2. Verify status message shows "No object selected to copy"
+  3. Try to cut without selecting an object
+  4. Verify status message shows "No object selected to cut"
+  5. Try to paste without anything in clipboard
+  6. Verify status message shows "No object in clipboard to paste"
 
-### 7. Navigation Tests
-- [ ] View mode allows clicking objects to navigate
-- [ ] Page navigation works correctly
-- [ ] Back button returns to previous page
-- [ ] Main button returns to main page
-- [ ] Page history is maintained correctly
-- [ ] Breadcrumb navigation displays correctly
+#### 7. Multiple Operations
+- **Test Case**: Perform multiple copy/paste operations
+- **Steps**:
+  1. Copy an object
+  2. Paste it multiple times
+  3. Verify each paste creates a new object
+  4. Verify undo works for each paste operation
 
-### 8. Linking Tests
-- [ ] Objects can link to new pages
-- [ ] Objects can link to existing pages
-- [ ] Objects can link to URLs
-- [ ] Objects can link to documents (PDF, Word, Excel, Video)
-- [ ] Document links open files correctly
-- [ ] URL links open in browser
-- [ ] Page links navigate correctly
+### Expected Results
 
-### 9. File Operations Tests
-- [ ] Save project works
-- [ ] Save As works
-- [ ] Open project works
-- [ ] Recent projects list is maintained
-- [ ] Project files are created in correct format
-- [ ] Project files can be loaded correctly
+1. **Copy**: Creates a copy of the object in clipboard without modifying the original
+2. **Cut**: Removes the object from the canvas and stores it in clipboard
+3. **Paste**: Creates a new object from clipboard content with slight position offset
+4. **Undo/Redo**: Properly restores or re-applies operations
+5. **Keyboard Shortcuts**: All shortcuts work as expected
+6. **Error Handling**: Appropriate error messages for invalid operations
 
-### 10. Publishing Tests
-- [ ] Publish menu item works
-- [ ] Published project file creation works
-- [ ] ZIP package creation works
-- [ ] Published files contain all project data
-- [ ] HTML viewer is generated correctly
-- [ ] Self-executing package works
+### Notes
 
-### 11. Template Tests
-- [ ] Template service is functional
-- [ ] Default templates can be created
-- [ ] Templates can be saved
-- [ ] Templates can be loaded
-- [ ] Template projects have correct structure
-
-### 12. Error Handling Tests
-- [ ] Invalid file paths are handled gracefully
-- [ ] Missing files show appropriate error messages
-- [ ] Invalid project files are handled correctly
-- [ ] Application doesn't crash on invalid input
-- [ ] Error messages are user-friendly
-
-### 13. Performance Tests
-- [ ] Application starts quickly
-- [ ] Large projects load in reasonable time
-- [ ] Object creation is responsive
-- [ ] Navigation is smooth
-- [ ] Memory usage is reasonable
-
-### 14. Integration Tests
-- [ ] All services work together correctly
-- [ ] Data flows correctly between components
-- [ ] UI updates reflect data changes
-- [ ] Commands execute correctly
-- [ ] Undo/Redo structure is in place
-
-## Test Execution Steps
-
-### Manual Testing
-1. Launch application
-2. Create new project
-3. Test each drawing tool
-4. Test object properties
-5. Test navigation
-6. Test file operations
-7. Test publishing
-8. Test error scenarios
-
-### Automated Testing (Future)
-- Unit tests for services
-- Integration tests for UI components
-- End-to-end tests for complete workflows
-
-## Expected Results
-- All features work as specified in requirements
-- UI is responsive and user-friendly
-- Data is persisted correctly
-- Error handling is robust
-- Performance is acceptable
-
-## Test Report
-After running tests, document:
-- Passed tests
-- Failed tests
-- Performance metrics
-- Issues found
-- Recommendations for improvement 
+- All operations should work in Edit mode
+- Objects should maintain their properties (colors, text, links, etc.) when copied/cut/pasted
+- The command pattern ensures proper undo/redo functionality
+- Clipboard content persists until overwritten by another copy/cut operation 

@@ -1,0 +1,325 @@
+<Window x:Class="Exploder.Views.PageCreationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Create New Page" Height="600" Width="500"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        Background="#1e1e1e">
+
+    <Window.Resources>
+        <!-- Color Scheme -->
+        <SolidColorBrush x:Key="PrimaryBackground" Color="#1e1e1e"/>
+        <SolidColorBrush x:Key="SecondaryBackground" Color="#252526"/>
+        <SolidColorBrush x:Key="TertiaryBackground" Color="#2d2d30"/>
+        <SolidColorBrush x:Key="AccentColor" Color="#007acc"/>
+        <SolidColorBrush x:Key="AccentHover" Color="#1c97ea"/>
+        <SolidColorBrush x:Key="TextPrimary" Color="#cccccc"/>
+        <SolidColorBrush x:Key="TextSecondary" Color="#969696"/>
+        <SolidColorBrush x:Key="BorderColor" Color="#3f3f46"/>
+
+        <!-- Effects -->
+        <DropShadowEffect x:Key="CardShadow" BlurRadius="10" ShadowDepth="2" Opacity="0.3"/>
+
+        <!-- Button Styles -->
+        <Style x:Key="ModernButton" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{StaticResource TextPrimary}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="12,8"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#40ffffff"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#60ffffff"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="AccentButton" TargetType="{x:Type Button}" BasedOn="{StaticResource ModernButton}">
+            <Setter Property="Background" Value="{StaticResource AccentColor}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{StaticResource AccentHover}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- TextBox Style -->
+        <Style x:Key="ModernTextBox" TargetType="{x:Type TextBox}">
+            <Setter Property="Background" Value="{StaticResource SecondaryBackground}"/>
+            <Setter Property="Foreground" Value="{StaticResource TextPrimary}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource BorderColor}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="8,6"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Border Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="4">
+                            <ScrollViewer x:Name="PART_ContentHost" 
+                                          Margin="{TemplateBinding Padding}"
+                                          VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- ComboBox Style -->
+        <Style x:Key="ModernComboBox" TargetType="{x:Type ComboBox}">
+            <Setter Property="Background" Value="{StaticResource SecondaryBackground}"/>
+            <Setter Property="Foreground" Value="{StaticResource TextPrimary}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource BorderColor}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="8,6"/>
+            <Setter Property="FontSize" Value="13"/>
+        </Style>
+
+        <!-- CheckBox Style -->
+        <Style x:Key="ModernCheckBox" TargetType="{x:Type CheckBox}">
+            <Setter Property="Foreground" Value="{StaticResource TextPrimary}"/>
+            <Setter Property="FontSize" Value="13"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Border Grid.Row="0" Background="{StaticResource TertiaryBackground}" 
+                BorderBrush="{StaticResource BorderColor}" BorderThickness="0,0,0,1"
+                CornerRadius="8,8,0,0" Padding="20,16">
+            <StackPanel>
+                <TextBlock Text="Create New Page" FontSize="20" FontWeight="Bold" 
+                           Foreground="{StaticResource TextPrimary}" Margin="0,0,0,8"/>
+                <TextBlock Text="Configure the new page settings and properties" 
+                           Foreground="{StaticResource TextSecondary}" FontSize="13"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Content -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="0,16">
+            <StackPanel>
+                <!-- Basic Page Information -->
+                <Border Background="{StaticResource SecondaryBackground}" 
+                        Effect="{StaticResource CardShadow}" Margin="0,0,0,16" 
+                        CornerRadius="8" Padding="20">
+                    <StackPanel>
+                        <TextBlock Text="Page Information" FontWeight="Bold" 
+                                   Foreground="{StaticResource TextPrimary}" Margin="0,0,0,16"/>
+                        
+                        <!-- Page Name -->
+                        <StackPanel Margin="0,0,0,12">
+                            <TextBlock Text="Page Name" Foreground="{StaticResource TextSecondary}" 
+                                       FontSize="12" Margin="0,0,0,4"/>
+                            <TextBox x:Name="txtPageName" Style="{StaticResource ModernTextBox}" 
+                                     Text="New Page" TextChanged="txtPageName_TextChanged"/>
+                        </StackPanel>
+
+                        <!-- Parent Page -->
+                        <StackPanel Margin="0,0,0,12">
+                            <TextBlock Text="Parent Page (Optional)" Foreground="{StaticResource TextSecondary}" 
+                                       FontSize="12" Margin="0,0,0,4"/>
+                            <ComboBox x:Name="cmbParentPage" Style="{StaticResource ModernComboBox}"
+                                      SelectionChanged="cmbParentPage_SelectionChanged"/>
+                        </StackPanel>
+
+                        <!-- Page Description -->
+                        <StackPanel Margin="0,0,0,12">
+                            <TextBlock Text="Description (Optional)" Foreground="{StaticResource TextSecondary}" 
+                                       FontSize="12" Margin="0,0,0,4"/>
+                            <TextBox x:Name="txtPageDescription" Style="{StaticResource ModernTextBox}" 
+                                     Height="60" TextWrapping="Wrap" AcceptsReturn="True"
+                                     VerticalScrollBarVisibility="Auto"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- Page Settings -->
+                <Border Background="{StaticResource SecondaryBackground}" 
+                        Effect="{StaticResource CardShadow}" Margin="0,0,0,16" 
+                        CornerRadius="8" Padding="20">
+                    <StackPanel>
+                        <TextBlock Text="Page Settings" FontWeight="Bold" 
+                                   Foreground="{StaticResource TextPrimary}" Margin="0,0,0,16"/>
+                        
+                        <!-- Page Size -->
+                        <StackPanel Margin="0,0,0,12">
+                            <TextBlock Text="Page Size" Foreground="{StaticResource TextSecondary}" 
+                                       FontSize="12" Margin="0,0,0,4"/>
+                            <ComboBox x:Name="cmbPageSize" Style="{StaticResource ModernComboBox}"
+                                      SelectionChanged="cmbPageSize_SelectionChanged">
+                                <ComboBoxItem Content="A4 (210 x 297 mm)" IsSelected="True"/>
+                                <ComboBoxItem Content="Letter (216 x 279 mm)"/>
+                                <ComboBoxItem Content="Legal (216 x 356 mm)"/>
+                                <ComboBoxItem Content="A3 (297 x 420 mm)"/>
+                                <ComboBoxItem Content="A5 (148 x 210 mm)"/>
+                                <ComboBoxItem Content="Custom"/>
+                            </ComboBox>
+                        </StackPanel>
+
+                        <!-- Orientation -->
+                        <StackPanel Margin="0,0,0,12">
+                            <TextBlock Text="Orientation" Foreground="{StaticResource TextSecondary}" 
+                                       FontSize="12" Margin="0,0,0,4"/>
+                            <StackPanel Orientation="Horizontal">
+                                <RadioButton x:Name="radioPortrait" Content="Portrait" 
+                                            Style="{StaticResource ModernCheckBox}" 
+                                            IsChecked="True" Margin="0,0,16,0"/>
+                                <RadioButton x:Name="radioLandscape" Content="Landscape" 
+                                            Style="{StaticResource ModernCheckBox}"/>
+                            </StackPanel>
+                        </StackPanel>
+
+                        <!-- Custom Dimensions (initially hidden) -->
+                        <StackPanel x:Name="customDimensionsPanel" Margin="0,0,0,12" Visibility="Collapsed">
+                            <TextBlock Text="Custom Dimensions (mm)" Foreground="{StaticResource TextSecondary}" 
+                                       FontSize="12" Margin="0,0,0,4"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="8"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox x:Name="txtCustomWidth" Grid.Column="0" 
+                                         Style="{StaticResource ModernTextBox}" Text="210"
+                                         TextChanged="txtCustomDimensions_TextChanged"/>
+                                <TextBlock Grid.Column="1" Text="×" 
+                                           Foreground="{StaticResource TextSecondary}" 
+                                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <TextBox x:Name="txtCustomHeight" Grid.Column="2" 
+                                         Style="{StaticResource ModernTextBox}" Text="297"
+                                         TextChanged="txtCustomDimensions_TextChanged"/>
+                            </Grid>
+                        </StackPanel>
+
+                        <!-- Margin Size -->
+                        <StackPanel Margin="0,0,0,12">
+                            <TextBlock Text="Margin Size (mm)" Foreground="{StaticResource TextSecondary}" 
+                                       FontSize="12" Margin="0,0,0,4"/>
+                            <TextBox x:Name="txtMarginSize" Style="{StaticResource ModernTextBox}" 
+                                     Text="20" TextChanged="txtMarginSize_TextChanged"/>
+                        </StackPanel>
+
+                        <!-- Background Color -->
+                        <StackPanel Margin="0,0,0,12">
+                            <TextBlock Text="Background Color" Foreground="{StaticResource TextSecondary}" 
+                                       FontSize="12" Margin="0,0,0,4"/>
+                            <ComboBox x:Name="cmbBackgroundColor" Style="{StaticResource ModernComboBox}"
+                                      SelectionChanged="cmbBackgroundColor_SelectionChanged">
+                                <ComboBoxItem Content="White" IsSelected="True"/>
+                                <ComboBoxItem Content="Light Gray"/>
+                                <ComboBoxItem Content="Gray"/>
+                                <ComboBoxItem Content="Dark Gray"/>
+                                <ComboBoxItem Content="Black"/>
+                                <ComboBoxItem Content="Light Blue"/>
+                                <ComboBoxItem Content="Light Green"/>
+                                <ComboBoxItem Content="Light Yellow"/>
+                                <ComboBoxItem Content="Transparent"/>
+                            </ComboBox>
+                        </StackPanel>
+
+                        <!-- Display Options -->
+                        <StackPanel Margin="0,0,0,12">
+                            <TextBlock Text="Display Options" Foreground="{StaticResource TextSecondary}" 
+                                       FontSize="12" Margin="0,0,0,4"/>
+                            <CheckBox x:Name="chkShowGrid" Content="Show Grid" 
+                                     Style="{StaticResource ModernCheckBox}" 
+                                     IsChecked="True" Margin="0,0,0,4"/>
+                            <CheckBox x:Name="chkShowRulers" Content="Show Rulers" 
+                                     Style="{StaticResource ModernCheckBox}" 
+                                     IsChecked="True"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- Template Options -->
+                <Border Background="{StaticResource SecondaryBackground}" 
+                        Effect="{StaticResource CardShadow}" Margin="0,0,0,16" 
+                        CornerRadius="8" Padding="20">
+                    <StackPanel>
+                        <TextBlock Text="Template Options" FontWeight="Bold" 
+                                   Foreground="{StaticResource TextPrimary}" Margin="0,0,0,16"/>
+                        
+                        <!-- Template Type -->
+                        <StackPanel Margin="0,0,0,12">
+                            <TextBlock Text="Template Type" Foreground="{StaticResource TextSecondary}" 
+                                       FontSize="12" Margin="0,0,0,4"/>
+                            <ComboBox x:Name="cmbTemplateType" Style="{StaticResource ModernComboBox}"
+                                      SelectionChanged="cmbTemplateType_SelectionChanged">
+                                <ComboBoxItem Content="Blank Page" IsSelected="True"/>
+                                <ComboBoxItem Content="Title Page"/>
+                                <ComboBoxItem Content="Content Page"/>
+                                <ComboBoxItem Content="Navigation Page"/>
+                                <ComboBoxItem Content="Form Page"/>
+                                <ComboBoxItem Content="Chart Page"/>
+                                <ComboBoxItem Content="Image Gallery"/>
+                            </ComboBox>
+                        </StackPanel>
+
+                        <!-- Pre-populated Objects -->
+                        <StackPanel x:Name="templateOptionsPanel" Margin="0,0,0,12" Visibility="Collapsed">
+                            <TextBlock Text="Pre-populated Objects" Foreground="{StaticResource TextSecondary}" 
+                                       FontSize="12" Margin="0,0,0,4"/>
+                            <CheckBox x:Name="chkAddTitle" Content="Add Title Text" 
+                                     Style="{StaticResource ModernCheckBox}" 
+                                     IsChecked="True" Margin="0,0,0,4"/>
+                            <CheckBox x:Name="chkAddNavigation" Content="Add Navigation Buttons" 
+                                     Style="{StaticResource ModernCheckBox}" 
+                                     IsChecked="True" Margin="0,0,0,4"/>
+                            <CheckBox x:Name="chkAddContentArea" Content="Add Content Area" 
+                                     Style="{StaticResource ModernCheckBox}" 
+                                     IsChecked="True"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- Footer -->
+        <Border Grid.Row="2" Background="{StaticResource TertiaryBackground}" 
+                BorderBrush="{StaticResource BorderColor}" BorderThickness="0,1,0,0"
+                CornerRadius="0,0,8,8" Padding="20,16">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="8"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0" x:Name="txtStatus" Text="Ready to create page" 
+                           Foreground="{StaticResource TextSecondary}" 
+                           VerticalAlignment="Center" FontSize="12"/>
+
+                <Button Grid.Column="1" Content="Cancel" Style="{StaticResource ModernButton}" 
+                        Click="btnCancel_Click" Width="80"/>
+                <Button Grid.Column="3" x:Name="btnCreate" Content="Create Page" Style="{StaticResource AccentButton}" 
+                        Click="btnCreate_Click" Width="100"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Window> 

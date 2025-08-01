@@ -26,6 +26,14 @@
 		<Compile Remove="TestConsole\**\*" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <None Remove="Views\4bad495b-31ac-44ed-868f-e8ab7f8b8435.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Resource Include="Views\4bad495b-31ac-44ed-868f-e8ab7f8b8435.png" />
+	</ItemGroup>
+
 	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
 		<Exec Command="powershell -ExecutionPolicy Bypass -File &quot;$(ProjectDir)Properties\Kill-WpfApp.ps1&quot;" />
 	</Target>

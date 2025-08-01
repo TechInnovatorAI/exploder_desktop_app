@@ -217,7 +217,10 @@
         <Border Grid.Row="2" Background="{StaticResource ToolbarGradient}" 
                 BorderBrush="{StaticResource BorderColor}" BorderThickness="0,0,0,1">
             <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
-                <StackPanel Orientation="Horizontal" Margin="8,4">
+                <StackPanel Margin="8,4" Orientation="Horizontal">
+                    <StackPanel.Background>
+                        <ImageBrush/>
+                    </StackPanel.Background>
                     <!-- Mode Toggle Switch -->
                     <Border x:Name="modeToggleContainer" Background="{StaticResource TertiaryBackground}" 
                             BorderBrush="{StaticResource BorderColor}" BorderThickness="1" 
@@ -241,9 +244,9 @@
                                     Background="Transparent" Foreground="{StaticResource TextSecondary}"/>
 
                             <!-- Sliding Indicator -->
-                            <Border x:Name="modeSlider" Grid.Column="0" Grid.ColumnSpan="2"
-                                    Background="{StaticResource AccentColor}" CornerRadius="18"
-                                    Width="60" Height="28" HorizontalAlignment="Left" Margin="2,2,0,0">
+                            <Border x:Name="modeSlider"
+                                    Background="{DynamicResource AccentColor}" CornerRadius="18"
+                                    Width="60" Height="28" HorizontalAlignment="Center" Margin="0,0,0,2">
                                 <Border.Effect>
                                     <DropShadowEffect BlurRadius="5" ShadowDepth="1" Opacity="0.3"/>
                                 </Border.Effect>
@@ -271,7 +274,7 @@
                     <Button x:Name="btnImageTool" Content="🖼" Style="{StaticResource ToolButton}" 
                             Click="btnImageTool_Click" ToolTip="Image tool"/>
                     <Button x:Name="btnDeleteTool" Content="🗑️" Style="{StaticResource ToolButton}" 
-                            Click="btnDeleteTool_Click" ToolTip="Delete tool - click objects to delete"/>
+                            Click="btnDeleteTool_Click" ToolTip="Delete tool - click objects to delete" Background="#FF3A3636" Height="39" Width="43"/>
 
                     <Separator Margin="16,8" Background="{StaticResource BorderColor}"/>
 
@@ -374,13 +377,16 @@
             <Border Grid.Column="2" Background="{StaticResource SecondaryBackground}" 
                 Margin="16" Effect="{StaticResource CardShadow}">
                 <Canvas x:Name="drawingCanvas"
-                        Background="White"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Stretch"
                         MouseLeftButtonDown="drawingCanvas_MouseLeftButtonDown"
                         MouseMove="drawingCanvas_MouseMove"
                         MouseLeftButtonUp="drawingCanvas_MouseLeftButtonUp"
-                        MouseRightButtonDown="drawingCanvas_MouseRightButtonDown"/>
+                        MouseRightButtonDown="drawingCanvas_MouseRightButtonDown">
+                    <Canvas.Background>
+                        <ImageBrush ImageSource="/Views/4bad495b-31ac-44ed-868f-e8ab7f8b8435.png"/>
+                    </Canvas.Background>
+                </Canvas>
             </Border>
         </Grid>
 

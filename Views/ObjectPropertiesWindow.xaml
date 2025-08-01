@@ -227,7 +227,7 @@
                                 
                                 <ComboBox x:Name="cmbFillColor" Grid.Column="0" 
                                           Style="{StaticResource ModernComboBox}" 
-                                          SelectionChanged="cmbFillColor_SelectionChanged"/>
+                                          SelectionChanged="cmbFillColor_SelectionChanged" Background="#FF848484"/>
                                 
                                 <Border x:Name="colorPreview" Grid.Column="1" Width="24" Height="24" 
                                         Background="Transparent" BorderBrush="{StaticResource BorderColor}" 

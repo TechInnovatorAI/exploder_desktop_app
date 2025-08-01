@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\app\\Exploder\\Exploder.csproj": {}
+    "D:\\Project\\app\\Exploder\\Exploder.csproj": {}
   },
   "projects": {
-    "D:\\app\\Exploder\\Exploder.csproj": {
+    "D:\\Project\\app\\Exploder\\Exploder.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\app\\Exploder\\Exploder.csproj",
+        "projectUniqueName": "D:\\Project\\app\\Exploder\\Exploder.csproj",
         "projectName": "Exploder",
-        "projectPath": "D:\\app\\Exploder\\Exploder.csproj",
+        "projectPath": "D:\\Project\\app\\Exploder\\Exploder.csproj",
         "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "D:\\app\\Exploder\\obj\\",
+        "outputPath": "D:\\Project\\app\\Exploder\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

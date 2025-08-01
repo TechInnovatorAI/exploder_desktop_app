@@ -4,12 +4,12 @@
 winexe
 C#
 .cs
-D:\app\Exploder\obj\Debug\net9.0-windows\
+D:\Project\app\Exploder\obj\Debug\net9.0-windows\
 Exploder
 none
 false
 TRACE;DEBUG;NET;NET9_0;NETCOREAPP;WINDOWS;WINDOWS7_0;NET5_0_OR_GREATER;NET6_0_OR_GREATER;NET7_0_OR_GREATER;NET8_0_OR_GREATER;NET9_0_OR_GREATER;NETCOREAPP3_0_OR_GREATER;NETCOREAPP3_1_OR_GREATER;WINDOWS7_0_OR_GREATER
-D:\app\Exploder\App.xaml
+D:\Project\app\Exploder\App.xaml
 5-639459672
 
 26-755866557
